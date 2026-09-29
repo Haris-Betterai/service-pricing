@@ -1,24 +1,35 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full">
+<html lang="en" class="h-full antialiased">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Service & Retail Inventory Hub</title>
-    <!-- Tailwind CSS -->
+    <title>Upkeep Service & Retail Hub</title>
+    
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome for Icons -->
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts Inter -->
+    <!-- Google Fonts: Inter & Fira Code -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
     <script>
         tailwind.config = {
-            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            900: '#14532d',
+                        }
                     }
                 }
             }
@@ -26,789 +37,652 @@
     </script>
     <style>
         body { font-family: 'Inter', sans-serif; }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-        }
-        .dark .glass-card {
-            background: rgba(30, 41, 59, 0.9);
-            backdrop-filter: blur(10px);
-        }
-        /* Custom scrollbar */
-        ::-webkit-scrollbar { width: 8px; height: 8px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
-        .dark ::-webkit-scrollbar-thumb { background: #475569; }
+        .json-scroll::-webkit-scrollbar { width: 8px; height: 8px; }
+        .json-scroll::-webkit-scrollbar-track { background: #0f172a; border-radius: 8px; }
+        .json-scroll::-webkit-scrollbar-thumb { background: #334155; border-radius: 8px; }
+        .json-scroll::-webkit-scrollbar-thumb:hover { background: #475569; }
     </style>
 </head>
-<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-full flex flex-col transition-colors duration-300">
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
 
-    <header class="sticky top-0 z-40 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm">
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-xs">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <div class="flex items-center space-x-3">
-                <div class="h-10 w-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-md shadow-blue-500/20">
+                <div class="h-10 w-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-700 flex items-center justify-center text-white shadow-sm">
                     <i class="fa-solid fa-boxes-stacked text-lg"></i>
                 </div>
                 <div>
-                    <h1 class="text-lg font-bold tracking-tight text-slate-900 dark:text-white">Inventory & Services Hub</h1>
-                    <p class="text-xs text-slate-500 dark:text-slate-400">Searchable catalog with live JSON API simulator</p>
+                    <h1 class="text-lg font-bold tracking-tight text-slate-900">Upkeep Service & Retail Hub</h1>
+                    <p class="text-xs text-slate-500 font-medium">Full 198-Item Master Inventory & API Simulator</p>
                 </div>
             </div>
-            
             <div class="flex items-center space-x-3">
-                <!-- API Simulator Modal Trigger -->
-                <button onclick="openApiModal()" class="inline-flex items-center space-x-2 px-3.5 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold transition-all shadow-sm">
-                    <i class="fa-solid fa-code text-indigo-500"></i>
-                    <span class="hidden sm:inline">JSON API Endpoint</span>
-                </button>
-                
-                <!-- Theme Toggle -->
-                <button onclick="toggleDarkMode()" class="p-2.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition-colors">
-                    <i id="themeIcon" class="fa-solid fa-moon"></i>
-                </button>
+                <a href="#api-simulator" class="hidden sm:inline-flex items-center space-x-2 px-3.5 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition-colors">
+                    <i class="fa-solid fa-code text-emerald-600"></i>
+                    <span>JSON API Simulator</span>
+                </a>
             </div>
         </div>
     </header>
 
-    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
         
-        <!-- Stats Grid -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div class="bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm flex items-center space-x-4">
-                <div class="p-3 rounded-xl bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400">
-                    <i class="fa-solid fa-layer-group text-xl"></i>
+        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex items-center space-x-4">
+                <div class="h-12 w-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl font-bold">
+                    <i class="fa-solid fa-layer-group"></i>
                 </div>
                 <div>
-                    <p class="text-xs font-medium text-slate-500 dark:text-slate-400">Total Catalog Items</p>
-                    <h3 id="statTotal" class="text-2xl font-bold text-slate-900 dark:text-white">0</h3>
+                    <p class="text-xs font-semibold uppercase tracking-wider text-slate-400">Total Catalog Items</p>
+                    <h3 id="statTotal" class="text-2xl font-bold text-slate-900">198</h3>
                 </div>
             </div>
 
-            <div class="bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm flex items-center space-x-4">
-                <div class="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400">
-                    <i class="fa-solid fa-screwdriver-wrench text-xl"></i>
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex items-center space-x-4">
+                <div class="h-12 w-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl font-bold">
+                    <i class="fa-solid fa-screwdriver-wrench"></i>
                 </div>
                 <div>
-                    <p class="text-xs font-medium text-slate-500 dark:text-slate-400">Services</p>
-                    <h3 id="statServices" class="text-2xl font-bold text-slate-900 dark:text-white">0</h3>
+                    <p class="text-xs font-semibold uppercase tracking-wider text-slate-400">Services</p>
+                    <h3 id="statServices" class="text-2xl font-bold text-slate-900">0</h3>
                 </div>
             </div>
 
-            <div class="bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm flex items-center space-x-4">
-                <div class="p-3 rounded-xl bg-violet-50 dark:bg-violet-950/50 text-violet-600 dark:text-violet-400">
-                    <i class="fa-solid fa-tag text-xl"></i>
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex items-center space-x-4">
+                <div class="h-12 w-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl font-bold">
+                    <i class="fa-solid fa-tag"></i>
                 </div>
                 <div>
-                    <p class="text-xs font-medium text-slate-500 dark:text-slate-400">Retail Products</p>
-                    <h3 id="statRetail" class="text-2xl font-bold text-slate-900 dark:text-white">0</h3>
+                    <p class="text-xs font-semibold uppercase tracking-wider text-slate-400">Retail Products</p>
+                    <h3 id="statRetail" class="text-2xl font-bold text-slate-900">0</h3>
                 </div>
             </div>
 
-            <div class="bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm flex items-center space-x-4">
-                <div class="p-3 rounded-xl bg-amber-50 dark:bg-amber-950/50 text-amber-600 dark:text-amber-400">
-                    <i class="fa-solid fa-calculator text-xl"></i>
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex items-center space-x-4">
+                <div class="h-12 w-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-xl font-bold">
+                    <i class="fa-solid fa-dollar-sign"></i>
                 </div>
                 <div>
-                    <p class="text-xs font-medium text-slate-500 dark:text-slate-400">Avg Finalized Price</p>
-                    <h3 id="statAvgPrice" class="text-2xl font-bold text-slate-900 dark:text-white">$0.00</h3>
+                    <p class="text-xs font-semibold uppercase tracking-wider text-slate-400">Avg Finalized Price</p>
+                    <h3 id="statAvgPrice" class="text-2xl font-bold text-slate-900">$0.00</h3>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-4">
-            <!-- Search & View Toggles -->
-            <div class="flex flex-col md:flex-row gap-3 items-center justify-between">
-                <div class="relative w-full md:w-96">
+        <section class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-4">
+            <div class="flex flex-col md:flex-row gap-4 justify-between items-center">
+                <div class="relative w-full md:max-w-md">
                     <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-400">
                         <i class="fa-solid fa-search"></i>
                     </span>
-                    <input type="text" id="searchInput" oninput="handleSearch()" placeholder="Search items, categories, notes..." class="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-white transition-all">
+                    <input type="text" id="searchInput" placeholder="Search by name, category, pricing type..." class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-all">
                 </div>
-
-                <div class="flex items-center space-x-3 w-full md:w-auto justify-end">
-                    <button onclick="resetFilters()" class="px-3.5 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 text-xs font-medium rounded-xl transition-all">
+                
+                <div class="flex items-center gap-3 w-full md:w-auto justify-end">
+                    <button onclick="resetFilters()" class="px-4 py-2.5 bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 text-sm font-medium rounded-xl transition-all whitespace-nowrap">
                         <i class="fa-solid fa-rotate-right mr-1.5"></i> Reset Filters
                     </button>
-                    <!-- View Mode Toggle -->
-                    <div class="flex bg-slate-100 dark:bg-slate-800 p-1 rounded-xl">
-                        <button onclick="setViewMode('cards')" id="cardViewBtn" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm transition-all">
-                            <i class="fa-solid fa-grip mr-1"></i> Cards
+                    <div class="flex bg-slate-100 p-1 rounded-xl">
+                        <button onclick="setView('grid')" id="btnGrid" class="px-4 py-1.5 rounded-lg text-sm font-semibold bg-white text-slate-800 shadow-xs transition-all">
+                            <i class="fa-solid fa-grip mr-1.5"></i> Cards
                         </button>
-                        <button onclick="setViewMode('table')" id="tableViewBtn" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 transition-all">
-                            <i class="fa-solid fa-table mr-1"></i> Table
+                        <button onclick="setView('table')" id="btnTable" class="px-4 py-1.5 rounded-lg text-sm font-semibold text-slate-500 hover:text-slate-700 transition-all">
+                            <i class="fa-solid fa-table mr-1.5"></i> Table
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Filter Dropdowns -->
-            <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-2 border-t border-slate-100 dark:border-slate-800">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4 border-t border-slate-100">
                 <div>
-                    <label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Item Type</label>
-                    <select id="filterType" onchange="applyFilters()" class="w-full py-2 px-3 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        <option value="">All Types</option>
+                    <label class="block text-xs font-semibold text-slate-500 mb-1.5 uppercase tracking-wider">Item Type</label>
+                    <select id="filterType" class="w-full py-2.5 px-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        <option value="">All Types (Service & Retail)</option>
                     </select>
                 </div>
                 <div>
-                    <label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Gender / Demographic</label>
-                    <select id="filterGender" onchange="applyFilters()" class="w-full py-2 px-3 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        <option value="">All Genders</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Service Department</label>
-                    <select id="filterDept" onchange="applyFilters()" class="w-full py-2 px-3 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        <option value="">All Departments</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Service Category</label>
-                    <select id="filterCat" onchange="applyFilters()" class="w-full py-2 px-3 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <label class="block text-xs font-semibold text-slate-500 mb-1.5 uppercase tracking-wider">Item Category</label>
+                    <select id="filterCat" class="w-full py-2.5 px-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-500">
                         <option value="">All Categories</option>
                     </select>
                 </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-500 mb-1.5 uppercase tracking-wider">Sub-Category</label>
+                    <select id="filterSubCat" class="w-full py-2.5 px-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        <option value="">All Sub-Categories</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-500 mb-1.5 uppercase tracking-wider">Department / Gender</label>
+                    <select id="filterDept" class="w-full py-2.5 px-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        <option value="">All Departments & Genders</option>
+                    </select>
+                </div>
             </div>
+        </section>
+
+        <div class="flex items-center justify-between px-1">
+            <h2 class="text-lg font-bold text-slate-800">Filtered Inventory Items (<span id="resultCount">0</span>)</h2>
         </div>
 
-        <div id="resultsInfo" class="flex justify-between items-center text-xs text-slate-500 dark:text-slate-400 px-1">
-            <span id="itemCountDisplay">Showing 0 items</span>
-            <span id="activeFilterBadge" class="hidden font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/60 px-2.5 py-1 rounded-full">Filtered active</span>
+        <div id="emptyState" class="hidden flex flex-col items-center justify-center p-16 bg-white rounded-2xl border border-slate-200 text-center">
+            <div class="h-16 w-16 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 text-2xl mb-4">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900">No matching items found</h3>
+            <p class="text-sm text-slate-500 mt-1">Try modifying your search keywords or clearing active filters.</p>
         </div>
 
-        <!-- Card View Container -->
-        <div id="cardViewContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <!-- Dynamically populated cards -->
-        </div>
+        <!-- Grid Card View -->
+        <div id="gridView" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
 
-        <!-- Table View Container -->
-        <div id="tableViewContainer" class="hidden bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm overflow-hidden">
+        <!-- Detailed Table View -->
+        <div id="tableView" class="hidden bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
             <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse">
+                <table class="w-full text-left border-collapse min-w-[900px]">
                     <thead>
-                        <tr class="bg-slate-50 dark:bg-slate-800/70 border-b border-slate-200 dark:border-slate-800 text-xs font-semibold text-slate-600 dark:text-slate-300">
-                            <th class="p-4">Item / Service</th>
-                            <th class="p-4">Type</th>
-                            <th class="p-4">Category / Dept</th>
-                            <th class="p-4">Gender</th>
-                            <th class="p-4">Original</th>
-                            <th class="p-4">Finalized</th>
-                            <th class="p-4">Pricing Type</th>
+                        <tr class="bg-slate-50 border-b border-slate-200 text-xs uppercase tracking-wider font-semibold text-slate-500">
+                            <th class="px-6 py-4">Item / Service Name</th>
+                            <th class="px-6 py-4">Type & Category</th>
+                            <th class="px-6 py-4">Department / Gender</th>
+                            <th class="px-6 py-4">Pricing Type</th>
+                            <th class="px-6 py-4 text-right">Original</th>
+                            <th class="px-6 py-4 text-right">Finalized</th>
                         </tr>
                     </thead>
-                    <tbody id="tableBody" class="divide-y divide-slate-100 dark:divide-slate-800 text-xs">
-                        <!-- Dynamically populated rows -->
-                    </tbody>
+                    <tbody id="tableBody" class="divide-y divide-slate-100 text-sm"></tbody>
                 </table>
             </div>
         </div>
 
-        <!-- Empty State -->
-        <div id="emptyState" class="hidden flex flex-col items-center justify-center p-12 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 text-center">
-            <div class="h-14 w-14 rounded-2xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400 text-xl mb-3">
-                <i class="fa-solid fa-folder-open"></i>
+        <section id="api-simulator" class="mt-12 bg-slate-900 rounded-2xl shadow-xl border border-slate-800 overflow-hidden flex flex-col">
+            <div class="bg-slate-800 px-6 py-4 border-b border-slate-700 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <div class="flex items-center space-x-3">
+                    <i class="fa-solid fa-terminal text-emerald-400"></i>
+                    <div>
+                        <h2 class="text-base font-bold text-white tracking-tight">JSON API Query Simulator</h2>
+                        <p class="text-xs text-slate-400">Real-time endpoint returning live filtered JSON records</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <button onclick="downloadJson()" class="px-3.5 py-1.5 bg-slate-700 hover:bg-slate-600 text-white text-xs font-semibold rounded-lg transition-colors flex items-center">
+                        <i class="fa-solid fa-download mr-1.5"></i> Download JSON
+                    </button>
+                    <button onclick="copyJson()" class="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold rounded-lg transition-colors flex items-center">
+                        <i class="fa-regular fa-copy mr-1.5"></i> Copy Payload
+                    </button>
+                </div>
             </div>
-            <h3 class="text-base font-bold text-slate-800 dark:text-white">No matching items found</h3>
-            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 max-w-sm">Try adjusting your search keywords or resetting the selected filters.</p>
-            <button onclick="resetFilters()" class="mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-xl shadow-md transition-all">Clear All Filters</button>
-        </div>
+            
+            <div class="p-6 space-y-6">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-2 uppercase tracking-wider">Simulated Request Query Parameters</label>
+                    <div class="flex bg-black/50 border border-slate-700 rounded-xl p-3 font-mono text-xs sm:text-sm overflow-x-auto items-center">
+                        <span class="text-emerald-400 font-bold mr-3">GET</span>
+                        <span id="apiEndpoint" class="text-slate-300 whitespace-nowrap">/api/v1/upkeep-inventory?type=&category=&subcat=&department=&q=</span>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider">Response JSON Payload (<span id="jsonItemCount">0</span> objects)</label>
+                    </div>
+                    <pre id="jsonOutput" class="json-scroll bg-black/50 border border-slate-700 rounded-xl p-4 text-xs font-mono text-emerald-300 overflow-auto max-h-96"></pre>
+                </div>
+            </div>
+        </section>
 
     </main>
 
-    <div id="apiModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-3xl w-full border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
-            <div class="p-5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
-                <div class="flex items-center space-x-3">
-                    <div class="p-2 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400">
-                        <i class="fa-solid fa-code text-lg"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">JSON API Simulator & Endpoint Tool</h3>
-                        <p class="text-xs text-slate-500 dark:text-slate-400">Simulate query parameters and export filtered dataset as formatted JSON</p>
-                    </div>
-                </div>
-                <button onclick="closeApiModal()" class="p-2 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
-                    <i class="fa-solid fa-xmark text-lg"></i>
-                </button>
-            </div>
-
-            <div class="p-6 space-y-4 overflow-y-auto flex-1">
-                <div>
-                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Simulated API Endpoint URL with Active Query Parameters</label>
-                    <div class="flex items-center space-x-2">
-                        <input type="text" id="apiUrlOutput" readonly class="w-full p-2.5 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-mono text-indigo-600 dark:text-indigo-400 focus:outline-none">
-                        <button onclick="copyApiUrl()" class="px-3.5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-xl shadow-sm transition-all whitespace-nowrap">
-                            <i class="fa-solid fa-copy mr-1"></i> Copy URL
-                        </button>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                    <div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-200/60 dark:border-slate-700">
-                        <span class="font-semibold text-slate-700 dark:text-slate-300 block mb-1">Available Query Parameters:</span>
-                        <ul class="list-disc list-inside space-y-1 text-slate-500 dark:text-slate-400">
-                            <li><code class="text-indigo-500 font-mono">?search=keyword</code></li>
-                            <li><code class="text-indigo-500 font-mono">?type=Service</code></li>
-                            <li><code class="text-indigo-500 font-mono">?gender=Men's</code></li>
-                            <li><code class="text-indigo-500 font-mono">?dept=Alterations</code></li>
-                        </ul>
-                    </div>
-                    <div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-200/60 dark:border-slate-700 flex flex-col justify-between">
-                        <div>
-                            <span class="font-semibold text-slate-700 dark:text-slate-300 block mb-1">Export Options:</span>
-                            <p class="text-slate-500 dark:text-slate-400 mb-2">Download or copy the exact filtered JSON payload matching current query criteria.</p>
-                        </div>
-                        <div class="flex space-x-2">
-                            <button onclick="copyJsonPayload()" class="flex-1 py-2 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-white rounded-lg font-medium transition-all">
-                                <i class="fa-solid fa-clipboard mr-1"></i> Copy JSON
-                            </button>
-                            <button onclick="downloadJsonPayload()" class="flex-1 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-all shadow-sm">
-                                <i class="fa-solid fa-download mr-1"></i> Download
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div>
-                    <div class="flex items-center justify-between mb-1">
-                        <label class="text-xs font-semibold text-slate-700 dark:text-slate-300">JSON Payload Preview (<span id="jsonItemCount">0</span> items)</label>
-                        <span id="copyStatus" class="text-xs text-emerald-600 font-medium hidden"><i class="fa-solid fa-check mr-1"></i> Copied to clipboard!</span>
-                    </div>
-                    <pre id="jsonPreviewBox" class="p-4 bg-slate-900 text-slate-200 rounded-xl text-xs font-mono overflow-x-auto max-h-72 border border-slate-800 shadow-inner"></pre>
-                </div>
-            </div>
-            
-            <div class="p-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 flex justify-end">
-                <button onclick="closeApiModal()" class="px-4 py-2 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded-xl transition-all">Close</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="mt-auto py-6 text-center text-xs text-slate-400 dark:text-slate-600 border-t border-slate-200 dark:border-slate-800">
-        Inventory & Services Management Hub &bull; Built with Responsive Tailwind UI & Embedded CSV Parser
+    <footer class="mt-auto py-8 text-center text-xs text-slate-400 border-t border-slate-200">
+        Upkeep Service & Retail Hub &bull; Full Dataset Loaded &bull; Responsive Application
     </footer>
 
     <script>
-        // Raw CSV data embedded directly inside the application
-        const rawCsvData = `Item Type,Item Catagory,Item Sub Catagory,Gender,Service Department,Sevice Catagory,Item / Service,Original Price,Finalized Price,Change ($),Alternate Prices,Pricing Type,Finalization Note,Source Tab,Source Cell
-Service,Shoes,Dress / Boot / Flat / Sneaker,Men's & Women's Services,Alterations,Glue,Glue Full Soles,,$48.00,,$48.00 / $55.00 / $65.00,Tiered / Variable,,,
-Service,Shoes,Dress / Boot / Flat / Sneaker,Men's & Women's Services,Alterations,Glue,Glue Half Soles,,$38.00,,,Fixed,,,
-Service,Shoes,Dress / Boot / Flat / Sneaker,Men's & Women's Services,Alterations,Pads,Foam Pad - Full,,$48.00,,,Fixed,,,
-Service,Shoes,Dress / Boot / Flat / Sneaker,Men's & Women's Services,Alterations,Pads,Foam Pad x1 - Half,,$38.00,,,Fixed,,,
-Service,Shoes,Dress / Boot / Flat / Sneaker,Men's & Women's Services,Alterations,Pads,Foam Pad x2 - Half,,$42.00,,,Fixed,,,
-Service,Shoes,Dress / Boot / Flat,Men's & Women's Services,Alterations,Heels,Reinforce Heel,,$75.00,,,Fixed,,,
-Service,Shoes,Dress / Boot / Flat,Women's Services,Alterations,Heels,Replace Heel,,$175.00,,,Fixed,,,
-Service,Shoes,Dress / Boot / Flat,Women's Services,Alterations,Heels,Re-Cover Both Heels,$250.00,$250.00,$0.00,,Fixed,Current price carried forward,Service Prices,D62
-Service,Shoes,Dress / Boot / Flat,Women's Services,Alterations,Heels,Re-Cover Single Heel,$150.00,$150.00,$0.00,,Fixed,Current price carried forward,Service Prices,D63
-Service,Shoes,Dress / Boot / Flat / Sneaker,Men's & Women's Services,Alterations,Restoration ,New Loops,,,,,Call for Quote,Current price carried forward,Service Prices,D84
-Service,Shoes,Dress / Boot / Flat / Sneaker,Men's & Women's Services,Alterations,Restoration ,Reinforce Loops,,,,,Call for Quote,Current price carried forward,Service Prices,D83
-Service,Shoes,Dress / Boot / Flat / Sneaker,Men's & Women's Services,Alterations,Restoration ,Re-stitch,,,,,Call for Quote,Current price carried forward,Service Prices,D85
-Service,Shoes,Dress / Boot / Flat / Sneaker,Men's & Women's Services,Alterations,Restoration ,Patch,,,,,Call for Quote,Current price carried forward,Service Prices,D86
-Service,Shoes,Dress / Boot / Flat / Sneaker,Men's & Women's Services,Alterations,Restoration ,Glue Leather,,,,,Call for Quote,Current price carried forward,Service Prices,D87
-Service,Shoes,Dress / Boot / Flat / Sneaker,Men's & Women's Services,Alterations,Restoration ,Glue & Smooth,,,,,Call for Quote,Current price carried forward,Service Prices,D87
-Service,Shoes,Dress / Boot / Flat / Sneaker,Men's & Women's Services,Alterations,Restoration ,Reinforce,,,,,Call for Quote,Current price carried forward,Service Prices,D88
-Service,Shoes,Dress / Boot / Flat / Sneaker,Men's & Women's Services,Alterations,New,New Pull,,,,,Call for Quote,Current price carried forward,Service Prices,D82
-Service,Shoes,Dress / Boot / Flat,Men's & Women's Services,Alterations,New,New Elastic (pair),,$48.00,,,,,,
-Service,Shoes,Dress / Boot / Flat,Men's & Women's Services,Alterations,New,New Zipper,$95.00,$95.00,,$95.00 / $150.00 / $250.00,Tiered / Variable,,,
-Service,Shoes,Dress / Boot / Flat,Men's & Women's Services,Alterations,Glue,Glue Sockliner,$95.00,$30.00,,,Tiered / Variable,,,
-Service,"Leather Accessories, Garments, Bags",Bag / Accesories / Garments,,Alterations,New,New Zipper,$95.00,$95.00,,$95.00 / $150.00 / $250.00,Tiered / Variable,,,
-Service,"Leather Accessories, Garments, Bags",Bag / Accesories / Garments,,Alterations,Glue,Glue Sockliner,$95.00,$30.00,,,Tiered / Variable,,,
-Service,Shoes,Dress / Boot / Flat,Men's & Women's Services,Alterations,New,New Sockliner w. Logo,,$75.00,,,Fixed,,,
-Service,Shoes,Dress / Boot / Flat,Men's & Women's Services,Alterations,New,New Sockliner (full),$95.00,$65.00,,,Fixed,,,
-Service,Shoes,Dress / Boot / Flat,Men's & Women's Services,Alterations,New,New Sockliner (half),$95.00,$48.00,,,Fixed,,,
-Service,Shoes,Dress / Boot / Flat,Men's & Women's Services,Alterations,Heels,New Heel Binding (single),$95.00,$24.00,,,Fixed,,,
-Service,Shoes,Dress / Boot / Flat,Men's & Women's Services,Alterations,Heels,New Heel Lining (both),,$75.00,,,Fixed,,,
-Service,Shoes,Dress / Boot / Flat,Men's & Women's Services,Alterations,Heels,New Heel Counter,,$75.00,,,Fixed,,,
-Service,Shoes,Dress / Boot / Flat,Men's & Women's Services,Alterations,Heels,Patch Stack,,$40.00,,,Call for Quote,,,
-Service,"Bags, Leather Accessories, Garments",Bag / Accesories / Garments,,Alterations,New,New Loops,,,,,Call for Quote,Current price carried forward,Service Prices,D84
-Service,"Bags, Leather Accessories, Garments",Bag / Accesories / Garments,,Alterations,Restoration ,Reinforce Loops,,,,,Call for Quote,Current price carried forward,Service Prices,D83
-Service,"Bags, Leather Accessories, Garments",Bag / Accesories / Garments,,Alterations,Restoration ,Re-stitch,,,,,Call for Quote,Current price carried forward,Service Prices,D85
-Service,"Bags, Leather Accessories, Garments",Bag / Accesories / Garments,,Alterations,Restoration ,Patch,,,,,Call for Quote,Current price carried forward,Service Prices,D86
-Service,"Bags, Leather Accessories, Garments",Bag / Accesories / Garments,,Alterations,Glue,Glue Leather,,,,,Call for Quote,Current price carried forward,Service Prices,D87
-Service,"Bags, Leather Accessories, Garments",Bag / Accesories / Garments,,Alterations,Glue,Glue Smooth & Touch Up,,,,,Call for Quote,Current price carried forward,Service Prices,D87
-Service,"Bags, Leather Accessories, Garments",Bag / Accesories / Garments,,Alterations,Restoration ,Reinforce,,,,,Call for Quote,Current price carried forward,Service Prices,D88
-Service,"Bags, Leather Accessories, Garments",Bag / Accesories / Garments,,Alterations,New,New Pull,,,,,Call for Quote,Current price carried forward,Service Prices,D82
-Service,"Bags, Leather Accessories, Garments",Bag / Accesories / Garments,,Alterations,New,New Zipper,$95.00,$95.00,,$95.00 / $150.00 / $250.00,Tiered / Variable,,,
-Service,Shoes,Dress / Boot / Flat,Women's Services,Alterations,New,New Strap,,,,,Call for Quote,Current price carried forward,Service Prices,D96
-Service,Shoes,Dress / Boot / Flat,Women's Services,Alterations,New,New Heel Breast,,,,,,,,
-Service,Shoes,Dress / Boot / Flat,Women's Services,Alterations,Restoration ,Take in Straps,,,,,,,,
-Service,Shoes,Boots,Women's Services,Alterations,Restoration ,Shorten,,,,,,,,
-Service,Shoes,Dress / Boot / Flat / Sneaker,Men's Services,Finishing,,Full Service Clean,$75.00,$75.00,$0.00,$75.00 / $95.00 / $125.00,Tiered / Variable,Current price carried forward,Service Prices,D28
-Service,Shoes,Dress / Boot / Flat / Sneaker,Men's Services,Finishing,,Scotchguard,$55.00,$55.00,$0.00,,Fixed,Current price carried forward,Service Prices,D29
-Service,Shoes,Dress / Boot / Flat / Sneaker,Men's Services,Finishing,,Shine,$28.00,$30.00,$4.00,$30.00 / $34.00 / $38.00,Tiered / Variable,Approved yellow-highlighted increase of $4.00 applied,Service Prices,I30
-Service,Shoes,Dress / Boot / Flat / Sneaker,Men's Services,Finishing,,Condition,$15.00,$20.00,$5.00,,Fixed,Approved yellow-highlighted increase of $5.00 applied,Service Prices,I32
-Service,Shoes,Dress / Boot / Flat / Sneaker,Men's Services,Finishing,,Brush,$15.00,$15.00,$0.00,,Fixed,Current price carried forward,Service Prices,D33
-Service,Shoes,Dress / Boot / Flat / Sneaker,Women's Services,Finishing,,Full Service Clean,$75.00,$75.00,$0.00,$75.00 / $95.00 / $125.00,Tiered / Variable,Current price carried forward,Service Prices,D64
-Service,Shoes,Dress / Boot / Flat,Women's Services,Finishing,,Shine,$28.00,$30.00,$4.00,$30.00 / $34.00 / $48.00,Fixed,Approved yellow-highlighted increase of $4.00 applied,Service Prices,I65
-Service,Shoes,Dress / Boot / Flat / Sneaker,Women's Services,Finishing,,Water & Stain,$28.00,$28.00,$0.00,,Fixed,Current price carried forward,Service Prices,D66
-Service,Shoes,Dress / Boot / Flat / Sneaker,Women's Services,Finishing,,Condition,$24.00,$28.00,$4.00,,Fixed,Approved yellow-highlighted increase of $4.00 applied,Service Prices,I67
-Service,Shoes,Dress / Boot / Flat / Sneaker,Women's Services,Finishing,,Brush Only,$18.00,$20.00,$2.00,,Fixed,Approved yellow-highlighted increase of $2.00 applied,Service Prices,I68
-Service,"Bags, Leather Accessories, Garments",Bag / Accesories / Garments,,Finishing,,"Full Clean - Inside & Out, Condition & Touch-Up",,$150.00,,,Call for Quote,Current price carried forward,Service Prices,D89
-Service,"Bags, Leather Accessories, Garments",Bag / Accesories / Garments,,Finishing,,Scotchguard,,,,,Call for Quote,Current price carried forward,Service Prices,D90
-Service,"Bags, Leather Accessories, Garments",Bag / Accesories / Garments,,Finishing,,Refinish,,,,,Call for Quote,Current price carried forward,Service Prices,D91
-Service,"Bags, Leather Accessories, Garments",Bag / Accesories / Garments,,Finishing,,Dye,,,,,Call for Quote,Current price carried forward,Service Prices,D92
-Service,"Bags, Leather Accessories, Garments",Bag / Accesories / Garments,,Finishing,,Condition,,,,,Call for Quote,Current price carried forward,Service Prices,D94
-Service,"Bags, Leather Accessories, Garments",Bag / Accesories / Garments,,Finishing,,Touch Up,,,,,Call for Quote,Current price carried forward,Service Prices,D95
-Service,"Bags, Leather Accessories, Garments",Bag / Accesories / Garments,,Finishing,,Spot Only,,,,,Call for Quote,Current price carried forward,Service Prices,D96
-Service,Shoes,Dress / Boot / Flat / Sneaker,Men's & Women's Services,Stretching,,L & W & Instep,$35.00,$40.00,$5.00,,Fixed,Approved yellow-highlighted increase of $5.00 applied,Service Prices,I70
-Service,Shoes,Dress / Boot / Flat / Sneaker,Men's & Women's Services,Stretching,,L & Instep,$30.00,$40.00,$5.00,,Fixed,Approved yellow-highlighted increase of $5.00 applied,Service Prices,I71
-Service,Shoes,Dress / Boot / Flat / Sneaker,Men's & Women's Services,Stretching,,W & Instep,$30.00,$40.00,$5.00,,Fixed,Approved yellow-highlighted increase of $5.00 applied,Service Prices,I72
-Service,Shoes,Dress / Boot / Flat / Sneaker,Men's & Women's Services,Stretching,,Length,$26.00,$30.00,$4.00,,Fixed,Approved yellow-highlighted increase of $4.00 applied,Service Prices,I73
-Service,Shoes,Dress / Boot / Flat / Sneaker,Men's & Women's Services,Stretching,,Width,$26.00,$30.00,$4.00,,Fixed,Approved yellow-highlighted increase of $4.00 applied,Service Prices,I74
-Service,Shoes,Dress / Boot / Flat / Sneaker,Men's & Women's Services,Stretching,,Instep,$26.00,$30.00,$4.00,,Fixed,Approved yellow-highlighted increase of $4.00 applied,Service Prices,I75
-Service,Shoes,Dress / Boot / Flat / Sneaker,Men's & Women's Services,Stretching,,L & W,$26.00,$30.00,$4.00,,Fixed,Approved yellow-highlighted increase of $4.00 applied,Service Prices,I76
-Service,Shoes,Dress / Boot / Flat / Sneaker,Men's & Women's Services,Stretching,,Bunions,$26.00,$30.00,$4.00,,Fixed,Approved yellow-highlighted increase of $4.00 applied,Service Prices,I77
-Service,Shoes,Dress / Boot / Flat / Sneaker,Men's & Women's Services,Stretching,,Raise Toes,$26.00,$30.00,$4.00,,Fixed,Approved yellow-highlighted increase of $4.00 applied,Service Prices,I78
-Service,Shoes,Dress / Boot / Flat / Sneaker,Men's & Women's Services,Stretching,,Toe Box,$26.00,$30.00,$4.00,,Fixed,Approved yellow-highlighted increase of $4.00 applied,Service Prices,I79
-Service,Shoes,Boots,Men's & Women's Services,Stretching,,Calves,$26.00,$75.00,$4.00,,Fixed,Approved yellow-highlighted increase of $4.00 applied,Service Prices,I79
-Service,Shoes,Boots,Men's & Women's Services,Stretching,,Calves w. Zipper,$26.00,$150.00,$4.00,,Fixed,Approved yellow-highlighted increase of $4.00 applied,Service Prices,I79
-Service,Shoes,Dress / Boot / Flat ,Men's Services,Soles & Heels ,Full Soles,Leather,$180.00,$180.00,$0.00,,Fixed,Current price carried forward,Service Prices,D4
-Service,Shoes,Dress / Boot / Flat ,Men's Services,Soles & Heels ,Full Soles,Malaysian Crepe - Soles & Heels,$250.00,$250.00,$0.00,,Fixed,Current price carried forward,Service Prices,D2
-Service,Shoes,Dress / Boot / Flat ,Men's Services,Soles & Heels ,Full Soles,Foam,$180.00,$180.00,$0.00,,Fixed,Current price carried forward,Service Prices,D5
-Service,Shoes,Dress / Boot / Flat ,Men's Services,Soles & Heels ,Full Soles,Vibram w/ Tracks,$180.00,$180.00,$0.00,,Fixed,Current price carried forward,Service Prices,D6
-Service,Shoes,Dress / Boot / Flat ,Men's Services,Soles & Heels ,Full Soles,Mirror Soles & Heels w. Gold Nails (Cover Logo),$225.00,$250.00,$0.00,,Fixed,Current price carried forward,Service Prices,D7
-Service,Shoes,Dress / Boot / Flat ,Women's Services,Soles & Heels ,Full Soles,Leather Full Sole,$180.00,$180.00,$0.00,,Fixed,Current price carried forward,Service Prices,D43
-Service,Shoes,Dress / Boot / Flat ,Men's Services,Soles & Heels ,Half Soles,Mirror Soles & Heels w. Gold Nails,$175.00,$175.00,$0.00,,Fixed,Current price carried forward,Service Prices,D7
-Service,Shoes,Dress / Boot / Flat ,Men's Services,Soles & Heels ,Half Soles,Leather (1/2 Sole),$180.00,$180.00,$0.00,,Fixed,Current price carried forward,Service Prices,D9
-Service,Shoes,Dress / Boot / Flat ,Men's Services,Soles & Heels ,Half Soles,Red Topy,$85.00,$95.00,$10.00,,Fixed,Approved yellow-highlighted increase of $10.00 applied,Service Prices,I10
-Service,Shoes,Dress / Boot / Flat ,Men's Services,Soles & Heels ,Half Soles,Topy,$75.00,$85.00,$10.00,,Fixed,Approved yellow-highlighted increase of $10.00 applied,Service Prices,I11
-Service,Shoes,Dress / Boot / Flat ,Men's Services,Soles & Heels ,Half Soles,Gum Crinkle,$125.00,$125.00,$0.00,,Fixed,Current price carried forward,Service Prices,D12
-Service,Shoes,Dress / Boot / Flat ,Men's Services,Soles & Heels ,Half Soles,Fine Line,$125.00,$125.00,$0.00,,Fixed,Current price carried forward,Service Prices,D13
-Service,Shoes,Dress / Boot / Flat ,Men's Services,Soles & Heels ,Half Soles,Mirror Red,$125.00,$125.00,$0.00,,Fixed,Current price carried forward,Service Prices,D14
-Service,Shoes,Dress / Boot / Flat ,Men's Services,Soles & Heels ,Half Soles,Matte Silk,$110.00,$110.00,$0.00,,Fixed,Current price carried forward,Service Prices,D15
-Service,Shoes,Dress / Boot / Flat ,Men's Services,Soles & Heels ,Half Soles,Crespino,$95.00,$95.00,$0.00,,Fixed,Current price carried forward,Service Prices,D16
-Service,Shoes,Dress / Boot / Flat ,Men's Services,Soles & Heels ,Half Soles,Add Stitched,$25.00,$30.00,$5.00,,Fixed,Approved yellow-highlighted increase of $5.00 applied,Service Prices,I17
-Service,Shoes,Dress / Boot / Flat ,Women's Services,Soles & Heels ,Half Soles,Leather,$125.00,$125.00,$0.00,,Fixed,Current price carried forward,Service Prices,D34
-Service,Shoes,Dress / Boot / Flat ,Women's Services,Soles & Heels ,Half Soles,Mirror Red,$110.00,$110.00,$0.00,,Fixed,Current price carried forward,Service Prices,D35
-Service,Shoes,Dress / Boot / Flat ,Women's Services,Soles & Heels ,Half Soles,Mirror,$110.00,$110.00,$0.00,,Fixed,Current price carried forward,Service Prices,D36
-Service,Shoes,Dress / Boot / Flat ,Women's Services,Soles & Heels ,Half Soles,Matte Silk,$110.00,$110.00,$0.00,,Fixed,Current price carried forward,Service Prices,D37
-Service,Shoes,Dress / Boot / Flat ,Women's Services,Soles & Heels ,Half Soles,Crespino,$85.00,$85.00,$0.00,,Fixed,Current price carried forward,Service Prices,D39
-Service,Shoes,Dress / Boot / Flat ,Women's Services,Soles & Heels ,Half Soles,Fine Line,$85.00,$85.00,$0.00,,Fixed,Current price carried forward,Service Prices,D40
-Service,Shoes,Dress / Boot / Flat ,Women's Services,Soles & Heels ,Half Soles,Red Topy,$75.00,$75.00,$0.00,,Fixed,Current price carried forward,Service Prices,D41
-Service,Shoes,Dress / Boot / Flat ,Women's Services,Soles & Heels ,Half Soles,Topy,$75.00,$75.00,$0.00,,Fixed,Current price carried forward,Service Prices,D42
-Service,Shoes,Dress / Boot / Flat ,Men's Services,Soles & Heels ,Heels & Tips,New Base Stack,$125.00,$125.00,$0.00,,Fixed,Current price carried forward,Service Prices,D8
-Service,Shoes,Dress / Boot / Flat ,Men's & Women's Services,Soles & Heels ,Heels & Tips,Tips - Rubber,$30.00,$30.00,$0.00,,Fixed,Current price carried forward,Service Prices,D19
-Service,Shoes,Dress / Boot / Flat ,Men's & Women's Services,Soles & Heels ,Heels & Tips,Tips - Leather,$30.00,$30.00,$0.00,,Fixed,Current price carried forward,Service Prices,D19
-Service,Shoes,Dress / Boot / Flat ,Men's Services,Soles & Heels ,Heels & Tips,Half & Half Mirror ,$55.00,$55.00,$0.00,,Fixed,Current price carried forward,Service Prices,D19
-Service,Shoes,Dress / Boot / Flat ,Men's Services,Soles & Heels ,Heels & Tips,Mcf Heels,$45.00,$50.00,$5.00,,Fixed,Approved yellow-highlighted increase of $5.00 applied,Service Prices,I20
-Service,Shoes,Dress / Boot / Flat ,Men's Services,Soles & Heels ,Heels & Tips,Rubber Heel,$40.00,$40.00,$0.00,$40.00 / $44.00 / $48.00,Tiered / Variable,Current price carried forward,Service Prices,D21
-Service,Shoes,Dress / Boot / Flat ,Men's Services,Soles & Heels ,Heels & Tips,Rubber on Top,$36.00,$36.00,$0.00,,Fixed,Current price carried forward,Service Prices,D22
-Service,Shoes,Dress / Boot / Flat ,Men's & Women's Services,Soles & Heels ,Heels & Tips,Heel & Toe Plates,$24.00,$24.00,$0.00,,Fixed,Current price carried forward,Service Prices,D23
-Service,Shoes,Dress / Boot / Flat ,Men's & Women's Services,Soles & Heels ,Heels & Tips,Patch Worn,$20.00,$25.00,$5.00,,Fixed,Approved yellow-highlighted increase of $5.00 applied,Service Prices,I24
-Service,Shoes,Dress / Boot / Flat ,Men's & Women's Services,Soles & Heels ,Heels & Tips,Metal Plates,$18.00,$22.00,$4.00,,Fixed,Approved yellow-highlighted increase of $4.00 applied,Service Prices,I25
-Service,Shoes,Dress / Boot / Flat ,Men's & Women's Services,Soles & Heels ,Heels & Tips,Heel Plates,$12.00,$12.00,$0.00,,Fixed,Current price carried forward,Service Prices,D26
-Service,Shoes,Dress / Boot / Flat ,Men's & Women's Services,Soles & Heels ,Heels & Tips,Toe Plates,$12.00,$12.00,$0.00,,Fixed,Current price carried forward,Service Prices,D27
-Service,Shoes,Dress / Boot / Flat ,Women's Services,Soles & Heels ,Heels & Tips,New Base Stacks,$125.00,$125.00,$0.00,,Fixed,Current price carried forward,Service Prices,D50
-Service,Shoes,Dress / Boot / Flat ,Women's Services,Soles & Heels ,Heels & Tips,Half & Half Rubber,$40.00,$55.00,$0.00,,Tiered / Variable,Current price carried forward,Service Prices,D51
-Service,Shoes,Dress / Boot / Flat ,Women's Services,Soles & Heels ,Heels & Tips,Mcf Heels,$40.00,$45.00,$0.00,,Fixed,Current price carried forward,Service Prices,D52
-Service,Shoes,Dress / Boot / Flat ,Women's Services,Soles & Heels ,Heels & Tips,Rubber on Top,$38.00,$38.00,$0.00,,Fixed,Current price carried forward,Service Prices,D53
-Service,Shoes,Dress / Boot / Flat ,Women's Services,Soles & Heels ,Heels & Tips,Rubber,$34.00,$34.00,$0.00,$30.00 / $28.00 / $26.00,Tiered / Variable,Current price carried forward,Service Prices,D54
-Service,Shoes,Dress / Boot / Flat ,Women's Services,Soles & Heels ,Heels & Tips,Rubber Taps - Red/Color,$28.00,$34.00,$2.00,,Fixed,Approved yellow-highlighted increase of $2.00 applied,Service Prices,I55
-Service,Shoes,Dress / Boot / Flat ,Women's Services,Soles & Heels ,Heels & Tips,Rubber Taps,$28.00,$30.00,$2.00,,Fixed,Approved yellow-highlighted increase of $2.00 applied,Service Prices,I55
-Service,Shoes,Dress / Boot / Flat ,Women's Services,Soles & Heels ,Heels & Tips,Cut/Shorten,$28.00,$30.00,$2.00,,Fixed,Approved yellow-highlighted increase of $2.00 applied,Service Prices,I56
-Service,Shoes,Dress / Boot / Flat ,Women's Services,Soles & Heels ,Heels & Tips,Heel & Toe Plates,$24.00,$24.00,$0.00,,Fixed,Current price carried forward,Service Prices,D57
-Service,Shoes,Dress / Boot / Flat ,Women's Services,Soles & Heels ,Heels & Tips,Patch Worn,$22.00,$22.00,$0.00,,Tiered / Variable,Current price carried forward,Service Prices,D58
-Service,Shoes,Dress / Boot / Flat ,Women's Services,Soles & Heels ,Heels & Tips,Heel Plates,$12.00,$12.00,$0.00,,Fixed,Current price carried forward,Service Prices,D60
-Service,Shoes,Dress / Boot / Flat ,Women's Services,Soles & Heels ,Heels & Tips,Toe Plates,$12.00,$12.00,$0.00,,Fixed,Current price carried forward,Service Prices,D61
-Retail Product,,,,,Brushes & Tools,Four Seasons Suede Brush,$7.99,$14.99,$7.00,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K44
-Retail Product,,,,,Brushes & Tools,Metal Wire Suede Brush,$9.99,$14.99,$5.00,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K45
-Retail Product,,,,,Brushes & Tools,Handled Suede Brush,$7.99,$14.99,$7.00,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K46
-Retail Product,,,,,Brushes & Tools,Four Seasons Medium Horsehair Brush,$24.99,$24.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C47
-Retail Product,,,,,Brushes & Tools,Four Seasons Polish Dauber,$5.99,$8.99,$3.00,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K48
-Retail Product,,,,,Brushes & Tools,Tacco Nubuck Eraser,$7.99,$14.99,$7.00,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K49
-Retail Product,,,,,Brushes & Tools,Long Shoe Horn,$9.99,$11.99,$2.00,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K50
-Retail Product,,,,,Brushes & Tools,Small Shoe Horn,$4.99,$7.99,$3.00,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K51
-Retail Product,,,,,Brushes & Tools,Metal/Wood Handle Shoe Horn,$15.99,$15.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C52
-Retail Product,,,,,Foot Petals,Tip Toes — Black,$9.99,$9.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C2
-Retail Product,,,,,Foot Petals,Tip Toes — Nude,$9.99,$9.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C3
-Retail Product,,,,,Foot Petals,Tip Toes — Grey,$9.99,$9.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C4
-Retail Product,,,,,Foot Petals,Heel Grips — Black,$9.99,$9.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C5
-Retail Product,,,,,Foot Petals,Heel Grips — Nude,$9.99,$9.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C6
-Retail Product,,,,,Foot Petals,Heel Grips — Grey,$9.99,$9.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C7
-Retail Product,,,,,Foot Petals,Killer Kushionz — Black,$15.00,$21.99,$6.99,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K8
-Retail Product,,,,,Foot Petals,Killer Kushionz — Nude,$15.00,$21.99,$6.99,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K9
-Retail Product,,,,,Foot Petals,Strappy Strips — Black,$9.99,$9.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C10
-Retail Product,,,,,Foot Petals,Strappy Strips — Nude,$9.99,$9.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C11
-Retail Product,,,,,Foot Petals,Pressure Pointz — Black,$9.99,$9.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C12
-Retail Product,,,,,Foot Petals,Pressure Pointz — Nude,$9.99,$9.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C13
-Retail Product,,,,,Foot Petals,Amazing Arches — Nude,$8.99,$14.99,$6.00,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K14
-Retail Product,,,,,Foot Petals,Amazing Arches — Black,$8.99,$14.99,$6.00,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K15
-Retail Product,,,,,Foot Petals,Shoe Deodorizers — Pink,$7.99,$11.99,$4.00,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K16
-Retail Product,,,,,Foot Petals,Shoe Deodorizers — Grey,$7.99,$11.99,$4.00,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K17
-Retail Product,,,,,Foot Petals,Ball of Foot Cushions — Nude,$9.99,$9.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C18
-Retail Product,,,,,Foot Petals,Ball of Foot Cushions — Black,$9.99,$9.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C19
-Retail Product,,,,,Foot Petals,Blister Healers,$12.99,$12.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C20
-Retail Product,,,,,Insoles & Foot Aids,Suede Thick Halters — Nude,$9.99,$9.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C23
-Retail Product,,,,,Insoles & Foot Aids,Suede Thick Halters — Brown,$9.99,$9.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C24
-Retail Product,,,,,Insoles & Foot Aids,Suede Thick Halters — Black,$9.99,$9.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C25
-Retail Product,,,,,Insoles & Foot Aids,Tacco Suede Heel Grips,$9.99,$9.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C26
-Retail Product,,,,,Insoles & Foot Aids,Tacco Suede Strappy Strips,$9.00,$11.99,$2.99,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K27
-Retail Product,,,,,Insoles & Foot Aids,Tongue Pads,$7.50,$11.99,$4.49,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K28
-Retail Product,,,,,Insoles & Foot Aids,J.T. Foote Sure Soles,$9.99,$9.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C29
-Retail Product,,,,,Insoles & Foot Aids,Supertap Anti-Slip Sole Adhesive,$9.99,$9.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C30
-Retail Product,,,,,Insoles & Foot Aids,Tacco Leather 3/4 Insole,$28.99,$36.99,$8.00,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K31
-Retail Product,,,,,Insoles & Foot Aids,Tacco Full Deluxe Leather Insole,$39.99,$39.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C32
-Retail Product,,,,,Insoles & Foot Aids,Tacco Full Leather Insole,$20.99,$29.99,$9.00,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K33
-Retail Product,,,,,Insoles & Foot Aids,Tacco Full Foam Insoles,$10.99,$15.99,$5.00,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K34
-Retail Product,,,,,Insoles & Foot Aids,Tacco Fleece Insoles,$25.99,$25.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C35
-Retail Product,,,,,Insoles & Foot Aids,Pedag Terry Cloth Insoles,$24.99,$24.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C36
-Retail Product,,,,,Insoles & Foot Aids,Memory Foam Insoles,$24.99,$24.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C37
-Retail Product,,,,,Insoles & Foot Aids,Pedag Arch Support Insoles,$45.00,$45.00,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C38
-Retail Product,,,,,Insoles & Foot Aids,Tacco Heel Cushions — Small,$9.99,$9.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C39
-Retail Product,,,,,Insoles & Foot Aids,Tacco Heel Cushions — Medium,$9.99,$9.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C40
-Retail Product,,,,,Insoles & Foot Aids,Tacco Heel Cushions — Large,$9.99,$9.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C41
-Retail Product,,,,,Insoles & Foot Aids,Thin Suede Halters — Nude,$9.00,$11.99,$2.99,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K42
-Retail Product,,,,,Insoles & Foot Aids,Thin Suede Halters — Black,$9.00,$11.99,$2.99,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K43
-Retail Product,,,,,Laces,Dress Laces,$5.99,$5.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C65
-Retail Product,,,,,Laces,Athletic Laces,$6.99,$6.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C66
-Retail Product,,,,,Laces,Leather Laces — per yard,$4.00,$6.99,$2.99,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K67
-Retail Product,,,,,Laces,Moneysworth & Best Colorful Laces,$5.99,$5.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C68
-Retail Product,,,,,Laces,Wide Flat Specialty Laces,$13.99,$13.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C69
-Retail Product,,,,,Miscellaneous,A.Leaf CBD 300 mg Roll-On,$48.00,$48.00,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C83
-Retail Product,,,,,Miscellaneous,Angelus Leather Dye,$10.99,$10.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C81
-Retail Product,,,,,Miscellaneous,Pasquale Fabrizio Shoe Care Kit,$39.99,$39.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C82
-Retail Product,,,,,Miscellaneous,Ralyn Hand Sanitizer,$15.00,$15.00,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C80
-Retail Product,,,,,Miscellaneous,A.Leaf CBD 500 mg Cream,$48.00,$48.00,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C84
-Retail Product,,,,,Miscellaneous,NightCare Gel Gloves — Pink,$19.99,$19.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C85
-Retail Product,,,,,Miscellaneous,NightCare Gel Gloves — Oatmeal,$19.99,$19.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C86
-Retail Product,,,,,Miscellaneous,NightCare Gel Heel Socks — Blue,$19.99,$19.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C87
-Retail Product,,,,,Miscellaneous,NightCare Gel Heel Socks — Leopard,$19.99,$19.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C88
-Retail Product,,,,,Miscellaneous,Griffin Instant Shine/Clean,$12.99,$12.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C89
-Retail Product,,,,,Miscellaneous,Day One CBD Recovery Cream — 2000 mg,$48.00,$48.00,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C90
-Retail Product,,,,,Miscellaneous,Gift Card,,,,,Retail,Current price carried forward,Retail Product Pricing,C91
-Retail Product,,,,,Miscellaneous,Bamboo Charcoal Deodorant Insoles,$9.99,$9.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C92
-Retail Product,,,,,Polishes & Conditioners,TRG Shoe Polish,$7.99,$12.99,$5.00,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K53
-Retail Product,,,,,Polishes & Conditioners,Saphir Shoe Polish,$15.99,$22.99,$7.00,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K54
-Retail Product,,,,,Polishes & Conditioners,KIWI Shoe Stretch,$12.99,$12.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C55
-Retail Product,,,,,Polishes & Conditioners,Fiebing's Leather Lotion,$18.99,$18.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C56
-Retail Product,,,,,Polishes & Conditioners,Four Seasons Instant Sponge — Black,$6.99,$9.99,$3.00,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K57
-Retail Product,,,,,Polishes & Conditioners,Four Seasons Instant Sponge — Neutral,$6.99,$9.99,$3.00,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K58
-Retail Product,,,,,Polishes & Conditioners,Angelus Dry Cleaner — 3 oz.,$9.99,$9.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C59
-Retail Product,,,,,Polishes & Conditioners,Cadillac Water & Stain Protector,$12.99,$16.99,$4.00,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K60
-Retail Product,,,,,Polishes & Conditioners,Collonil Organic Bamboo Lotion,$18.99,$18.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C61
-Retail Product,,,,,Polishes & Conditioners,Collonil Organic Protect & Care,$18.99,$18.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C62
-Retail Product,,,,,Polishes & Conditioners,Moneysworth & Best Patent Care,$15.99,$19.99,$4.00,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K63`;
+        // Complete master inventory dataset containing all 198 items from the provided sheet
+        const masterInventory = [
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat / Sneaker", "Gender": "Men's & Women's Services", "Service Department": "Alterations", "Sevice Catagory": "Glue", "Item / Service": "Glue Full Soles", "Original Price": "", "Finalized Price": "$48.00", "Change ($)": "", "Alternate Prices": "$48.00 / $55.00 / $65.00", "Pricing Type": "Tiered / Variable", "Finalization Note": "", "Source Tab": "", "Source Cell": ""},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat / Sneaker", "Gender": "Men's & Women's Services", "Service Department": "Alterations", "Sevice Catagory": "Glue", "Item / Service": "Glue Half Soles", "Original Price": "$38.00", "Finalized Price": "$38.00", "Change ($)": "", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "", "Source Tab": "", "Source Cell": ""},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat / Sneaker", "Gender": "Men's & Women's Services", "Service Department": "Alterations", "Sevice Catagory": "Pads", "Item / Service": "Foam Pad - Full", "Original Price": "$48.00", "Finalized Price": "$48.00", "Change ($)": "", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "", "Source Tab": "", "Source Cell": ""},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat / Sneaker", "Gender": "Men's & Women's Services", "Service Department": "Alterations", "Sevice Catagory": "Pads", "Item / Service": "Foam Pad x1 - Half", "Original Price": "$38.00", "Finalized Price": "$38.00", "Change ($)": "", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "", "Source Tab": "", "Source Cell": ""},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat / Sneaker", "Gender": "Men's & Women's Services", "Service Department": "Alterations", "Sevice Catagory": "Pads", "Item / Service": "Foam Pad x2 - Half", "Original Price": "$42.00", "Finalized Price": "$42.00", "Change ($)": "", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "", "Source Tab": "", "Source Cell": ""},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Men's & Women's Services", "Service Department": "Alterations", "Sevice Catagory": "Heels", "Item / Service": "Reinforce Heel", "Original Price": "$75.00", "Finalized Price": "$75.00", "Change ($)": "", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "", "Source Tab": "", "Source Cell": ""},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Women's Services", "Service Department": "Alterations", "Sevice Catagory": "Heels", "Item / Service": "Replace Heel", "Original Price": "$175.00", "Finalized Price": "$175.00", "Change ($)": "", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "", "Source Tab": "", "Source Cell": ""},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Women's Services", "Service Department": "Alterations", "Sevice Catagory": "Heels", "Item / Service": "Re-Cover Both Heels", "Original Price": "$250.00", "Finalized Price": "$250.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D62"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Women's Services", "Service Department": "Alterations", "Sevice Catagory": "Heels", "Item / Service": "Re-Cover Single Heel", "Original Price": "$150.00", "Finalized Price": "$150.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D63"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat / Sneaker", "Gender": "Men's & Women's Services", "Service Department": "Alterations", "Sevice Catagory": "Restoration", "Item / Service": "New Loops", "Original Price": "", "Finalized Price": "", "Change ($)": "", "Alternate Prices": "", "Pricing Type": "Call for Quote", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D84"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat / Sneaker", "Gender": "Men's & Women's Services", "Service Department": "Alterations", "Sevice Catagory": "Restoration", "Item / Service": "Reinforce Loops", "Original Price": "", "Finalized Price": "", "Change ($)": "", "Alternate Prices": "", "Pricing Type": "Call for Quote", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D83"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat / Sneaker", "Gender": "Men's & Women's Services", "Service Department": "Alterations", "Sevice Catagory": "Restoration", "Item / Service": "Re-stitch", "Original Price": "", "Finalized Price": "", "Change ($)": "", "Alternate Prices": "", "Pricing Type": "Call for Quote", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D85"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat / Sneaker", "Gender": "Men's & Women's Services", "Service Department": "Alterations", "Sevice Catagory": "Restoration", "Item / Service": "Patch", "Original Price": "", "Finalized Price": "", "Change ($)": "", "Alternate Prices": "", "Pricing Type": "Call for Quote", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D86"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat / Sneaker", "Gender": "Men's & Women's Services", "Service Department": "Alterations", "Sevice Catagory": "Restoration", "Item / Service": "Glue Leather", "Original Price": "", "Finalized Price": "", "Change ($)": "", "Alternate Prices": "", "Pricing Type": "Call for Quote", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D87"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat / Sneaker", "Gender": "Men's & Women's Services", "Service Department": "Alterations", "Sevice Catagory": "Restoration", "Item / Service": "Glue & Smooth", "Original Price": "", "Finalized Price": "", "Change ($)": "", "Alternate Prices": "", "Pricing Type": "Call for Quote", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D87"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat / Sneaker", "Gender": "Men's & Women's Services", "Service Department": "Alterations", "Sevice Catagory": "Restoration", "Item / Service": "Reinforce", "Original Price": "", "Finalized Price": "", "Change ($)": "", "Alternate Prices": "", "Pricing Type": "Call for Quote", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D88"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat / Sneaker", "Gender": "Men's & Women's Services", "Service Department": "Alterations", "Sevice Catagory": "New", "Item / Service": "New Pull", "Original Price": "", "Finalized Price": "", "Change ($)": "", "Alternate Prices": "", "Pricing Type": "Call for Quote", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D82"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Men's & Women's Services", "Service Department": "Alterations", "Sevice Catagory": "New", "Item / Service": "New Elastic (pair)", "Original Price": "", "Finalized Price": "$48.00", "Change ($)": "", "Alternate Prices": "", "Pricing Type": "", "Finalization Note": "", "Source Tab": "", "Source Cell": ""},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Men's & Women's Services", "Service Department": "Alterations", "Sevice Catagory": "New", "Item / Service": "New Zipper", "Original Price": "$95.00", "Finalized Price": "$95.00", "Change ($)": "", "Alternate Prices": "$95.00 / $150.00 / $250.00", "Pricing Type": "Tiered / Variable", "Finalization Note": "", "Source Tab": "", "Source Cell": ""},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Men's & Women's Services", "Service Department": "Alterations", "Sevice Catagory": "Glue", "Item / Service": "Glue Sockliner", "Original Price": "$95.00", "Finalized Price": "$30.00", "Change ($)": "", "Alternate Prices": "", "Pricing Type": "Tiered / Variable", "Finalization Note": "", "Source Tab": "", "Source Cell": ""},
+            {"Item Type": "Service", "Item Catagory": "Leather Accessories, Garments, Bags", "Item Sub Catagory": "Bag / Accesories / Garments", "Gender": "", "Service Department": "Alterations", "Sevice Catagory": "New", "Item / Service": "New Zipper", "Original Price": "$95.00", "Finalized Price": "$95.00", "Change ($)": "", "Alternate Prices": "$95.00 / $150.00 / $250.00", "Pricing Type": "Tiered / Variable", "Finalization Note": "", "Source Tab": "", "Source Cell": ""},
+            {"Item Type": "Service", "Item Catagory": "Leather Accessories, Garments, Bags", "Item Sub Catagory": "Bag / Accesories / Garments", "Gender": "", "Service Department": "Alterations", "Sevice Catagory": "Glue", "Item / Service": "Glue Sockliner", "Original Price": "$95.00", "Finalized Price": "$30.00", "Change ($)": "", "Alternate Prices": "", "Pricing Type": "Tiered / Variable", "Finalization Note": "", "Source Tab": "", "Source Cell": ""},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Men's & Women's Services", "Service Department": "Alterations", "Sevice Catagory": "New", "Item / Service": "New Sockliner w. Logo", "Original Price": "", "Finalized Price": "$75.00", "Change ($)": "", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "", "Source Tab": "", "Source Cell": ""},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Men's & Women's Services", "Service Department": "Alterations", "Sevice Catagory": "New", "Item / Service": "New Sockliner (full)", "Original Price": "$95.00", "Finalized Price": "$65.00", "Change ($)": "", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "", "Source Tab": "", "Source Cell": ""},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Men's & Women's Services", "Service Department": "Alterations", "Sevice Catagory": "New", "Item / Service": "New Sockliner (half)", "Original Price": "$95.00", "Finalized Price": "$48.00", "Change ($)": "", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "", "Source Tab": "", "Source Cell": ""},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Men's & Women's Services", "Service Department": "Alterations", "Sevice Catagory": "Heels", "Item / Service": "New Heel Binding (single)", "Original Price": "$95.00", "Finalized Price": "$24.00", "Change ($)": "", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "", "Source Tab": "", "Source Cell": ""},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Men's & Women's Services", "Service Department": "Alterations", "Sevice Catagory": "Heels", "Item / Service": "New Heel Lining (both)", "Original Price": "", "Finalized Price": "$75.00", "Change ($)": "", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "", "Source Tab": "", "Source Cell": ""},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Men's & Women's Services", "Service Department": "Alterations", "Sevice Catagory": "Heels", "Item / Service": "New Heel Counter", "Original Price": "", "Finalized Price": "$75.00", "Change ($)": "", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "", "Source Tab": "", "Source Cell": ""},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Men's & Women's Services", "Service Department": "Alterations", "Sevice Catagory": "Heels", "Item / Service": "Patch Stack", "Original Price": "$40.00", "Finalized Price": "$40.00", "Change ($)": "", "Alternate Prices": "", "Pricing Type": "Call for Quote", "Finalization Note": "", "Source Tab": "", "Source Cell": ""},
+            {"Item Type": "Service", "Item Catagory": "Bags, Leather Accessories, Garments", "Item Sub Catagory": "Bag / Accesories / Garments", "Gender": "", "Service Department": "Alterations", "Sevice Catagory": "New", "Item / Service": "New Loops", "Original Price": "", "Finalized Price": "", "Change ($)": "", "Alternate Prices": "", "Pricing Type": "Call for Quote", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D84"},
+            {"Item Type": "Service", "Item Catagory": "Bags, Leather Accessories, Garments", "Item Sub Catagory": "Bag / Accesories / Garments", "Gender": "", "Service Department": "Alterations", "Sevice Catagory": "Restoration", "Item / Service": "Reinforce Loops", "Original Price": "", "Finalized Price": "", "Change ($)": "", "Alternate Prices": "", "Pricing Type": "Call for Quote", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D83"},
+            {"Item Type": "Service", "Item Catagory": "Bags, Leather Accessories, Garments", "Item Sub Catagory": "Bag / Accesories / Garments", "Gender": "", "Service Department": "Alterations", "Sevice Catagory": "Restoration", "Item / Service": "Re-stitch", "Original Price": "", "Finalized Price": "", "Change ($)": "", "Alternate Prices": "", "Pricing Type": "Call for Quote", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D85"},
+            {"Item Type": "Service", "Item Catagory": "Bags, Leather Accessories, Garments", "Item Sub Catagory": "Bag / Accesories / Garments", "Gender": "", "Service Department": "Alterations", "Sevice Catagory": "Restoration", "Item / Service": "Patch", "Original Price": "", "Finalized Price": "", "Change ($)": "", "Alternate Prices": "", "Pricing Type": "Call for Quote", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D86"},
+            {"Item Type": "Service", "Item Catagory": "Bags, Leather Accessories, Garments", "Item Sub Catagory": "Bag / Accesories / Garments", "Gender": "", "Service Department": "Alterations", "Sevice Catagory": "Glue", "Item / Service": "Glue Leather", "Original Price": "", "Finalized Price": "", "Change ($)": "", "Alternate Prices": "", "Pricing Type": "Call for Quote", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D87"},
+            {"Item Type": "Service", "Item Catagory": "Bags, Leather Accessories, Garments", "Item Sub Catagory": "Bag / Accesories / Garments", "Gender": "", "Service Department": "Alterations", "Sevice Catagory": "Glue", "Item / Service": "Glue Smooth & Touch Up", "Original Price": "", "Finalized Price": "", "Change ($)": "", "Alternate Prices": "", "Pricing Type": "Call for Quote", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D87"},
+            {"Item Type": "Service", "Item Catagory": "Bags, Leather Accessories, Garments", "Item Sub Catagory": "Bag / Accesories / Garments", "Gender": "", "Service Department": "Alterations", "Sevice Catagory": "Restoration", "Item / Service": "Reinforce", "Original Price": "", "Finalized Price": "", "Change ($)": "", "Alternate Prices": "", "Pricing Type": "Call for Quote", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D88"},
+            {"Item Type": "Service", "Item Catagory": "Bags, Leather Accessories, Garments", "Item Sub Catagory": "Bag / Accesories / Garments", "Gender": "", "Service Department": "Alterations", "Sevice Catagory": "New", "Item / Service": "New Pull", "Original Price": "", "Finalized Price": "", "Change ($)": "", "Alternate Prices": "", "Pricing Type": "Call for Quote", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D82"},
+            {"Item Type": "Service", "Item Catagory": "Bags, Leather Accessories, Garments", "Item Sub Catagory": "Bag / Accesories / Garments", "Gender": "", "Service Department": "Alterations", "Sevice Catagory": "New", "Item / Service": "New Zipper", "Original Price": "$95.00", "Finalized Price": "$95.00", "Change ($)": "", "Alternate Prices": "$95.00 / $150.00 / $250.00", "Pricing Type": "Tiered / Variable", "Finalization Note": "", "Source Tab": "", "Source Cell": ""},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Women's Services", "Service Department": "Alterations", "Sevice Catagory": "New", "Item / Service": "New Strap", "Original Price": "", "Finalized Price": "", "Change ($)": "", "Alternate Prices": "", "Pricing Type": "Call for Quote", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D96"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Women's Services", "Service Department": "Alterations", "Sevice Catagory": "New", "Item / Service": "New Heel Breast", "Original Price": "", "Finalized Price": "", "Change ($)": "", "Alternate Prices": "", "Pricing Type": "", "Finalization Note": "", "Source Tab": "", "Source Cell": ""},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Women's Services", "Service Department": "Alterations", "Sevice Catagory": "Restoration", "Item / Service": "Take in Straps", "Original Price": "", "Finalized Price": "", "Change ($)": "", "Alternate Prices": "", "Pricing Type": "", "Finalization Note": "", "Source Tab": "", "Source Cell": ""},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Boots", "Gender": "Women's Services", "Service Department": "Alterations", "Sevice Catagory": "Restoration", "Item / Service": "Shorten", "Original Price": "", "Finalized Price": "", "Change ($)": "", "Alternate Prices": "", "Pricing Type": "", "Finalization Note": "", "Source Tab": "", "Source Cell": ""},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat / Sneaker", "Gender": "Men's Services", "Service Department": "Finishing", "Sevice Catagory": "", "Item / Service": "Full Service Clean", "Original Price": "$75.00", "Finalized Price": "$75.00", "Change ($)": "$0.00", "Alternate Prices": "$75.00 / $95.00 / $125.00", "Pricing Type": "Tiered / Variable", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D28"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat / Sneaker", "Gender": "Men's Services", "Service Department": "Finishing", "Sevice Catagory": "", "Item / Service": "Scotchguard", "Original Price": "$55.00", "Finalized Price": "$55.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D29"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat / Sneaker", "Gender": "Men's Services", "Service Department": "Finishing", "Sevice Catagory": "", "Item / Service": "Shine", "Original Price": "$28.00", "Finalized Price": "$30.00", "Change ($)": "$4.00", "Alternate Prices": "$30.00 / $34.00 / $38.00", "Pricing Type": "Tiered / Variable", "Finalization Note": "Approved yellow-highlighted increase of $4.00 applied", "Source Tab": "Service Prices", "Source Cell": "I30"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat / Sneaker", "Gender": "Men's Services", "Service Department": "Finishing", "Sevice Catagory": "", "Item / Service": "Condition", "Original Price": "$15.00", "Finalized Price": "$20.00", "Change ($)": "$5.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Approved yellow-highlighted increase of $5.00 applied", "Source Tab": "Service Prices", "Source Cell": "I32"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat / Sneaker", "Gender": "Men's Services", "Service Department": "Finishing", "Sevice Catagory": "", "Item / Service": "Brush", "Original Price": "$15.00", "Finalized Price": "$15.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D33"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat / Sneaker", "Gender": "Women's Services", "Service Department": "Finishing", "Sevice Catagory": "", "Item / Service": "Full Service Clean", "Original Price": "$75.00", "Finalized Price": "$75.00", "Change ($)": "$0.00", "Alternate Prices": "$75.00 / $95.00 / $125.00", "Pricing Type": "Tiered / Variable", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D64"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Women's Services", "Service Department": "Finishing", "Sevice Catagory": "", "Item / Service": "Shine", "Original Price": "$28.00", "Finalized Price": "$30.00", "Change ($)": "$4.00", "Alternate Prices": "$30.00 / $34.00 / $48.00", "Pricing Type": "Fixed", "Finalization Note": "Approved yellow-highlighted increase of $4.00 applied", "Source Tab": "Service Prices", "Source Cell": "I65"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat / Sneaker", "Gender": "Women's Services", "Service Department": "Finishing", "Sevice Catagory": "", "Item / Service": "Water & Stain", "Original Price": "$28.00", "Finalized Price": "$28.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D66"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat / Sneaker", "Gender": "Women's Services", "Service Department": "Finishing", "Sevice Catagory": "", "Item / Service": "Condition", "Original Price": "$24.00", "Finalized Price": "$28.00", "Change ($)": "$4.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Approved yellow-highlighted increase of $4.00 applied", "Source Tab": "Service Prices", "Source Cell": "I67"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat / Sneaker", "Gender": "Women's Services", "Service Department": "Finishing", "Sevice Catagory": "", "Item / Service": "Brush Only", "Original Price": "$18.00", "Finalized Price": "$20.00", "Change ($)": "$2.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Approved yellow-highlighted increase of $2.00 applied", "Source Tab": "Service Prices", "Source Cell": "I68"},
+            {"Item Type": "Service", "Item Catagory": "Bags, Leather Accessories, Garments", "Item Sub Catagory": "Bag / Accesories / Garments", "Gender": "", "Service Department": "Finishing", "Sevice Catagory": "", "Item / Service": "Full Clean - Inside & Out, Condition & Touch-Up", "Original Price": "", "Finalized Price": "$150.00", "Change ($)": "", "Alternate Prices": "", "Pricing Type": "Call for Quote", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D89"},
+            {"Item Type": "Service", "Item Catagory": "Bags, Leather Accessories, Garments", "Item Sub Catagory": "Bag / Accesories / Garments", "Gender": "", "Service Department": "Finishing", "Sevice Catagory": "", "Item / Service": "Scotchguard", "Original Price": "", "Finalized Price": "", "Change ($)": "", "Alternate Prices": "", "Pricing Type": "Call for Quote", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D90"},
+            {"Item Type": "Service", "Item Catagory": "Bags, Leather Accessories, Garments", "Item Sub Catagory": "Bag / Accesories / Garments", "Gender": "", "Service Department": "Finishing", "Sevice Catagory": "", "Item / Service": "Refinish", "Original Price": "", "Finalized Price": "", "Change ($)": "", "Alternate Prices": "", "Pricing Type": "Call for Quote", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D91"},
+            {"Item Type": "Service", "Item Catagory": "Bags, Leather Accessories, Garments", "Item Sub Catagory": "Bag / Accesories / Garments", "Gender": "", "Service Department": "Finishing", "Sevice Catagory": "", "Item / Service": "Dye", "Original Price": "", "Finalized Price": "", "Change ($)": "", "Alternate Prices": "", "Pricing Type": "Call for Quote", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D92"},
+            {"Item Type": "Service", "Item Catagory": "Bags, Leather Accessories, Garments", "Item Sub Catagory": "Bag / Accesories / Garments", "Gender": "", "Service Department": "Finishing", "Sevice Catagory": "", "Item / Service": "Condition", "Original Price": "", "Finalized Price": "", "Change ($)": "", "Alternate Prices": "", "Pricing Type": "Call for Quote", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D94"},
+            {"Item Type": "Service", "Item Catagory": "Bags, Leather Accessories, Garments", "Item Sub Catagory": "Bag / Accesories / Garments", "Gender": "", "Service Department": "Finishing", "Sevice Catagory": "", "Item / Service": "Touch Up", "Original Price": "", "Finalized Price": "", "Change ($)": "", "Alternate Prices": "", "Pricing Type": "Call for Quote", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D95"},
+            {"Item Type": "Service", "Item Catagory": "Bags, Leather Accessories, Garments", "Item Sub Catagory": "Bag / Accesories / Garments", "Gender": "", "Service Department": "Finishing", "Sevice Catagory": "", "Item / Service": "Spot Only", "Original Price": "", "Finalized Price": "", "Change ($)": "", "Alternate Prices": "", "Pricing Type": "Call for Quote", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D96"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat / Sneaker", "Gender": "Men's & Women's Services", "Service Department": "Stretching", "Sevice Catagory": "", "Item / Service": "L & W & Instep", "Original Price": "$35.00", "Finalized Price": "$40.00", "Change ($)": "$5.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Approved yellow-highlighted increase of $5.00 applied", "Source Tab": "Service Prices", "Source Cell": "I70"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat / Sneaker", "Gender": "Men's & Women's Services", "Service Department": "Stretching", "Sevice Catagory": "", "Item / Service": "L & Instep", "Original Price": "$30.00", "Finalized Price": "$40.00", "Change ($)": "$5.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Approved yellow-highlighted increase of $5.00 applied", "Source Tab": "Service Prices", "Source Cell": "I71"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat / Sneaker", "Gender": "Men's & Women's Services", "Service Department": "Stretching", "Sevice Catagory": "", "Item / Service": "W & Instep", "Original Price": "$30.00", "Finalized Price": "$40.00", "Change ($)": "$5.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Approved yellow-highlighted increase of $5.00 applied", "Source Tab": "Service Prices", "Source Cell": "I72"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat / Sneaker", "Gender": "Men's & Women's Services", "Service Department": "Stretching", "Sevice Catagory": "", "Item / Service": "Length", "Original Price": "$26.00", "Finalized Price": "$30.00", "Change ($)": "$4.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Approved yellow-highlighted increase of $4.00 applied", "Source Tab": "Service Prices", "Source Cell": "I73"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat / Sneaker", "Gender": "Men's & Women's Services", "Service Department": "Stretching", "Sevice Catagory": "", "Item / Service": "Width", "Original Price": "$26.00", "Finalized Price": "$30.00", "Change ($)": "$4.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Approved yellow-highlighted increase of $4.00 applied", "Source Tab": "Service Prices", "Source Cell": "I74"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat / Sneaker", "Gender": "Men's & Women's Services", "Service Department": "Stretching", "Sevice Catagory": "", "Item / Service": "Instep", "Original Price": "$26.00", "Finalized Price": "$30.00", "Change ($)": "$4.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Approved yellow-highlighted increase of $4.00 applied", "Source Tab": "Service Prices", "Source Cell": "I75"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat / Sneaker", "Gender": "Men's & Women's Services", "Service Department": "Stretching", "Sevice Catagory": "", "Item / Service": "L & W", "Original Price": "$26.00", "Finalized Price": "$30.00", "Change ($)": "$4.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Approved yellow-highlighted increase of $4.00 applied", "Source Tab": "Service Prices", "Source Cell": "I76"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat / Sneaker", "Gender": "Men's & Women's Services", "Service Department": "Stretching", "Sevice Catagory": "", "Item / Service": "Bunions", "Original Price": "$26.00", "Finalized Price": "$30.00", "Change ($)": "$4.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Approved yellow-highlighted increase of $4.00 applied", "Source Tab": "Service Prices", "Source Cell": "I77"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat / Sneaker", "Gender": "Men's & Women's Services", "Service Department": "Stretching", "Sevice Catagory": "", "Item / Service": "Raise Toes", "Original Price": "$26.00", "Finalized Price": "$30.00", "Change ($)": "$4.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Approved yellow-highlighted increase of $4.00 applied", "Source Tab": "Service Prices", "Source Cell": "I78"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat / Sneaker", "Gender": "Men's & Women's Services", "Service Department": "Stretching", "Sevice Catagory": "", "Item / Service": "Toe Box", "Original Price": "$26.00", "Finalized Price": "$30.00", "Change ($)": "$4.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Approved yellow-highlighted increase of $4.00 applied", "Source Tab": "Service Prices", "Source Cell": "I79"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Boots", "Gender": "Men's & Women's Services", "Service Department": "Stretching", "Sevice Catagory": "", "Item / Service": "Calves", "Original Price": "$26.00", "Finalized Price": "$75.00", "Change ($)": "$4.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Approved yellow-highlighted increase of $4.00 applied", "Source Tab": "Service Prices", "Source Cell": "I79"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Boots", "Gender": "Men's & Women's Services", "Service Department": "Stretching", "Sevice Catagory": "", "Item / Service": "Calves w. Zipper", "Original Price": "$26.00", "Finalized Price": "$150.00", "Change ($)": "$4.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Approved yellow-highlighted increase of $4.00 applied", "Source Tab": "Service Prices", "Source Cell": "I79"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Men's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Full Soles", "Item / Service": "Leather", "Original Price": "$180.00", "Finalized Price": "$180.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D4"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Men's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Full Soles", "Item / Service": "Malaysian Crepe - Soles & Heels", "Original Price": "$250.00", "Finalized Price": "$250.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D2"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Men's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Full Soles", "Item / Service": "Foam", "Original Price": "$180.00", "Finalized Price": "$180.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D5"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Men's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Full Soles", "Item / Service": "Vibram w/ Tracks", "Original Price": "$180.00", "Finalized Price": "$180.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D6"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Men's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Full Soles", "Item / Service": "Mirror Soles & Heels w. Gold Nails (Cover Logo)", "Original Price": "$225.00", "Finalized Price": "$250.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D7"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Women's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Full Soles", "Item / Service": "Leather Full Sole", "Original Price": "$180.00", "Finalized Price": "$180.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D43"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Men's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Half Soles", "Item / Service": "Mirror Soles & Heels w. Gold Nails", "Original Price": "$175.00", "Finalized Price": "$175.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D7"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Men's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Half Soles", "Item / Service": "Leather (1/2 Sole)", "Original Price": "$180.00", "Finalized Price": "$180.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D9"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Men's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Half Soles", "Item / Service": "Red Topy", "Original Price": "$85.00", "Finalized Price": "$95.00", "Change ($)": "$10.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Approved yellow-highlighted increase of $10.00 applied", "Source Tab": "Service Prices", "Source Cell": "I10"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Men's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Half Soles", "Item / Service": "Topy", "Original Price": "$75.00", "Finalized Price": "$85.00", "Change ($)": "$10.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Approved yellow-highlighted increase of $10.00 applied", "Source Tab": "Service Prices", "Source Cell": "I11"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Men's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Half Soles", "Item / Service": "Gum Crinkle", "Original Price": "$125.00", "Finalized Price": "$125.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D12"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Men's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Half Soles", "Item / Service": "Fine Line", "Original Price": "$125.00", "Finalized Price": "$125.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D13"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Men's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Half Soles", "Item / Service": "Mirror Red", "Original Price": "$125.00", "Finalized Price": "$125.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D14"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Men's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Half Soles", "Item / Service": "Matte Silk", "Original Price": "$110.00", "Finalized Price": "$110.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D15"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Men's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Half Soles", "Item / Service": "Crespino", "Original Price": "$95.00", "Finalized Price": "$95.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D16"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Men's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Half Soles", "Item / Service": "Add Stitched", "Original Price": "$25.00", "Finalized Price": "$30.00", "Change ($)": "$5.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Approved yellow-highlighted increase of $5.00 applied", "Source Tab": "Service Prices", "Source Cell": "I17"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Women's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Half Soles", "Item / Service": "Leather", "Original Price": "$125.00", "Finalized Price": "$125.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D34"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Women's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Half Soles", "Item / Service": "Mirror Red", "Original Price": "$110.00", "Finalized Price": "$110.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D35"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Women's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Half Soles", "Item / Service": "Mirror", "Original Price": "$110.00", "Finalized Price": "$110.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D36"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Women's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Half Soles", "Item / Service": "Matte Silk", "Original Price": "$110.00", "Finalized Price": "$110.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D37"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Women's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Half Soles", "Item / Service": "Crespino", "Original Price": "$85.00", "Finalized Price": "$85.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D39"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Women's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Half Soles", "Item / Service": "Fine Line", "Original Price": "$85.00", "Finalized Price": "$85.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D40"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Women's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Half Soles", "Item / Service": "Red Topy", "Original Price": "$75.00", "Finalized Price": "$75.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D41"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Women's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Half Soles", "Item / Service": "Topy", "Original Price": "$75.00", "Finalized Price": "$75.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D42"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Men's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Heels & Tips", "Item / Service": "New Base Stack", "Original Price": "$125.00", "Finalized Price": "$125.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D8"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Men's & Women's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Heels & Tips", "Item / Service": "Tips - Rubber", "Original Price": "$30.00", "Finalized Price": "$30.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D19"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Men's & Women's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Heels & Tips", "Item / Service": "Tips - Leather", "Original Price": "$30.00", "Finalized Price": "$30.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D19"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Men's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Heels & Tips", "Item / Service": "Half & Half Mirror", "Original Price": "$55.00", "Finalized Price": "$55.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D19"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Men's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Heels & Tips", "Item / Service": "Mcf Heels", "Original Price": "$45.00", "Finalized Price": "$50.00", "Change ($)": "$5.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Approved yellow-highlighted increase of $5.00 applied", "Source Tab": "Service Prices", "Source Cell": "I20"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Men's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Heels & Tips", "Item / Service": "Rubber Heel", "Original Price": "$40.00", "Finalized Price": "$40.00", "Change ($)": "$0.00", "Alternate Prices": "$40.00 / $44.00 / $48.00", "Pricing Type": "Tiered / Variable", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D21"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Men's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Heels & Tips", "Item / Service": "Rubber on Top", "Original Price": "$36.00", "Finalized Price": "$36.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D22"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Men's & Women's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Heels & Tips", "Item / Service": "Heel & Toe Plates", "Original Price": "$24.00", "Finalized Price": "$24.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D23"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Men's & Women's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Heels & Tips", "Item / Service": "Patch Worn", "Original Price": "$20.00", "Finalized Price": "$25.00", "Change ($)": "$5.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Approved yellow-highlighted increase of $5.00 applied", "Source Tab": "Service Prices", "Source Cell": "I24"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Men's & Women's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Heels & Tips", "Item / Service": "Metal Plates", "Original Price": "$18.00", "Finalized Price": "$22.00", "Change ($)": "$4.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Approved yellow-highlighted increase of $4.00 applied", "Source Tab": "Service Prices", "Source Cell": "I25"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Men's & Women's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Heels & Tips", "Item / Service": "Heel Plates", "Original Price": "$12.00", "Finalized Price": "$12.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D26"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Men's & Women's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Heels & Tips", "Item / Service": "Toe Plates", "Original Price": "$12.00", "Finalized Price": "$12.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D27"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Women's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Heels & Tips", "Item / Service": "New Base Stacks", "Original Price": "$125.00", "Finalized Price": "$125.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D50"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Women's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Heels & Tips", "Item / Service": "Half & Half Rubber", "Original Price": "$40.00", "Finalized Price": "$55.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Tiered / Variable", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D51"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Women's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Heels & Tips", "Item / Service": "Mcf Heels", "Original Price": "$40.00", "Finalized Price": "$45.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D52"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Women's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Heels & Tips", "Item / Service": "Rubber on Top", "Original Price": "$38.00", "Finalized Price": "$38.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D53"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Women's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Heels & Tips", "Item / Service": "Rubber", "Original Price": "$34.00", "Finalized Price": "$34.00", "Change ($)": "$0.00", "Alternate Prices": "$30.00 / $28.00 / $26.00", "Pricing Type": "Tiered / Variable", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D54"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Women's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Heels & Tips", "Item / Service": "Rubber Taps - Red/Color", "Original Price": "$28.00", "Finalized Price": "$34.00", "Change ($)": "$2.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Approved yellow-highlighted increase of $2.00 applied", "Source Tab": "Service Prices", "Source Cell": "I55"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Women's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Heels & Tips", "Item / Service": "Rubber Taps", "Original Price": "$28.00", "Finalized Price": "$30.00", "Change ($)": "$2.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Approved yellow-highlighted increase of $2.00 applied", "Source Tab": "Service Prices", "Source Cell": "I55"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Women's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Heels & Tips", "Item / Service": "Cut/Shorten", "Original Price": "$28.00", "Finalized Price": "$30.00", "Change ($)": "$2.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Approved yellow-highlighted increase of $2.00 applied", "Source Tab": "Service Prices", "Source Cell": "I56"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Women's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Heels & Tips", "Item / Service": "Heel & Toe Plates", "Original Price": "$24.00", "Finalized Price": "$24.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D57"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Women's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Heels & Tips", "Item / Service": "Patch Worn", "Original Price": "$22.00", "Finalized Price": "$22.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Tiered / Variable", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D58"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Women's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Heels & Tips", "Item / Service": "Heel Plates", "Original Price": "$12.00", "Finalized Price": "$12.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D60"},
+            {"Item Type": "Service", "Item Catagory": "Shoes", "Item Sub Catagory": "Dress / Boot / Flat", "Gender": "Women's Services", "Service Department": "Soles & Heels", "Sevice Catagory": "Heels & Tips", "Item / Service": "Toe Plates", "Original Price": "$12.00", "Finalized Price": "$12.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Fixed", "Finalization Note": "Current price carried forward", "Source Tab": "Service Prices", "Source Cell": "D61"},
+            
+            // Retail Products
+            {"Item Type": "Retail Product", "Item Catagory": "Brushes & Tools", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Four Seasons Suede Brush", "Original Price": "$7.99", "Finalized Price": "$14.99", "Change ($)": "$7.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Approved yellow-highlighted suggested price applied", "Source Tab": "Retail Product Pricing", "Source Cell": "K44"},
+            {"Item Type": "Retail Product", "Item Catagory": "Brushes & Tools", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Metal Wire Suede Brush", "Original Price": "$9.99", "Finalized Price": "$14.99", "Change ($)": "$5.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Approved yellow-highlighted suggested price applied", "Source Tab": "Retail Product Pricing", "Source Cell": "K45"},
+            {"Item Type": "Retail Product", "Item Catagory": "Brushes & Tools", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Handled Suede Brush", "Original Price": "$7.99", "Finalized Price": "$14.99", "Change ($)": "$7.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Approved yellow-highlighted suggested price applied", "Source Tab": "Retail Product Pricing", "Source Cell": "K46"},
+            {"Item Type": "Retail Product", "Item Catagory": "Brushes & Tools", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Four Seasons Medium Horsehair Brush", "Original Price": "$24.99", "Finalized Price": "$24.99", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C47"},
+            {"Item Type": "Retail Product", "Item Catagory": "Brushes & Tools", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Four Seasons Polish Dauber", "Original Price": "$5.99", "Finalized Price": "$8.99", "Change ($)": "$3.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Approved yellow-highlighted suggested price applied", "Source Tab": "Retail Product Pricing", "Source Cell": "K48"},
+            {"Item Type": "Retail Product", "Item Catagory": "Brushes & Tools", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Tacco Nubuck Eraser", "Original Price": "$7.99", "Finalized Price": "$14.99", "Change ($)": "$7.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Approved yellow-highlighted suggested price applied", "Source Tab": "Retail Product Pricing", "Source Cell": "K49"},
+            {"Item Type": "Retail Product", "Item Catagory": "Brushes & Tools", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Long Shoe Horn", "Original Price": "$9.99", "Finalized Price": "$11.99", "Change ($)": "$2.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Approved yellow-highlighted suggested price applied", "Source Tab": "Retail Product Pricing", "Source Cell": "K50"},
+            {"Item Type": "Retail Product", "Item Catagory": "Brushes & Tools", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Small Shoe Horn", "Original Price": "$4.99", "Finalized Price": "$7.99", "Change ($)": "$3.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Approved yellow-highlighted suggested price applied", "Source Tab": "Retail Product Pricing", "Source Cell": "K51"},
+            {"Item Type": "Retail Product", "Item Catagory": "Brushes & Tools", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Metal/Wood Handle Shoe Horn", "Original Price": "$15.99", "Finalized Price": "$15.99", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C52"},
+            {"Item Type": "Retail Product", "Item Catagory": "Foot Petals", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Tip Toes — Black", "Original Price": "$9.99", "Finalized Price": "$9.99", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C2"},
+            {"Item Type": "Retail Product", "Item Catagory": "Foot Petals", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Tip Toes — Nude", "Original Price": "$9.99", "Finalized Price": "$9.99", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C3"},
+            {"Item Type": "Retail Product", "Item Catagory": "Foot Petals", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Tip Toes — Grey", "Original Price": "$9.99", "Finalized Price": "$9.99", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C4"},
+            {"Item Type": "Retail Product", "Item Catagory": "Foot Petals", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Heel Grips — Black", "Original Price": "$9.99", "Finalized Price": "$9.99", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C5"},
+            {"Item Type": "Retail Product", "Item Catagory": "Foot Petals", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Heel Grips — Nude", "Original Price": "$9.99", "Finalized Price": "$9.99", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C6"},
+            {"Item Type": "Retail Product", "Item Catagory": "Foot Petals", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Heel Grips — Grey", "Original Price": "$9.99", "Finalized Price": "$9.99", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C7"},
+            {"Item Type": "Retail Product", "Item Catagory": "Foot Petals", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Killer Kushionz — Black", "Original Price": "$15.00", "Finalized Price": "$21.99", "Change ($)": "$6.99", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Approved yellow-highlighted suggested price applied", "Source Tab": "Retail Product Pricing", "Source Cell": "K8"},
+            {"Item Type": "Retail Product", "Item Catagory": "Foot Petals", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Killer Kushionz — Nude", "Original Price": "$15.00", "Finalized Price": "$21.99", "Change ($)": "$6.99", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Approved yellow-highlighted suggested price applied", "Source Tab": "Retail Product Pricing", "Source Cell": "K9"},
+            {"Item Type": "Retail Product", "Item Catagory": "Foot Petals", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Strappy Strips — Black", "Original Price": "$9.99", "Finalized Price": "$9.99", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C10"},
+            {"Item Type": "Retail Product", "Item Catagory": "Foot Petals", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Strappy Strips — Nude", "Original Price": "$9.99", "Finalized Price": "$9.99", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C11"},
+            {"Item Type": "Retail Product", "Item Catagory": "Foot Petals", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Pressure Pointz — Black", "Original Price": "$9.99", "Finalized Price": "$9.99", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C12"},
+            {"Item Type": "Retail Product", "Item Catagory": "Foot Petals", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Pressure Pointz — Nude", "Original Price": "$9.99", "Finalized Price": "$9.99", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C13"},
+            {"Item Type": "Retail Product", "Item Catagory": "Foot Petals", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Amazing Arches — Nude", "Original Price": "$8.99", "Finalized Price": "$14.99", "Change ($)": "$6.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Approved yellow-highlighted suggested price applied", "Source Tab": "Retail Product Pricing", "Source Cell": "K14"},
+            {"Item Type": "Retail Product", "Item Catagory": "Foot Petals", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Amazing Arches — Black", "Original Price": "$8.99", "Finalized Price": "$14.99", "Change ($)": "$6.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Approved yellow-highlighted suggested price applied", "Source Tab": "Retail Product Pricing", "Source Cell": "K15"},
+            {"Item Type": "Retail Product", "Item Catagory": "Foot Petals", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Shoe Deodorizers — Pink", "Original Price": "$7.99", "Finalized Price": "$11.99", "Change ($)": "$4.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Approved yellow-highlighted suggested price applied", "Source Tab": "Retail Product Pricing", "Source Cell": "K16"},
+            {"Item Type": "Retail Product", "Item Catagory": "Foot Petals", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Shoe Deodorizers — Grey", "Original Price": "$7.99", "Finalized Price": "$11.99", "Change ($)": "$4.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Approved yellow-highlighted suggested price applied", "Source Tab": "Retail Product Pricing", "Source Cell": "K17"},
+            {"Item Type": "Retail Product", "Item Catagory": "Foot Petals", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Ball of Foot Cushions — Nude", "Original Price": "$9.99", "Finalized Price": "$9.99", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C18"},
+            {"Item Type": "Retail Product", "Item Catagory": "Foot Petals", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Ball of Foot Cushions — Black", "Original Price": "$9.99", "Finalized Price": "$9.99", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C19"},
+            {"Item Type": "Retail Product", "Item Catagory": "Foot Petals", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Blister Healers", "Original Price": "$12.99", "Finalized Price": "$12.99", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C20"},
+            {"Item Type": "Retail Product", "Item Catagory": "Insoles & Foot Aids", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Suede Thick Halters — Nude", "Original Price": "$9.99", "Finalized Price": "$9.99", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C23"},
+            {"Item Type": "Retail Product", "Item Catagory": "Insoles & Foot Aids", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Suede Thick Halters — Brown", "Original Price": "$9.99", "Finalized Price": "$9.99", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C24"},
+            {"Item Type": "Retail Product", "Item Catagory": "Insoles & Foot Aids", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Suede Thick Halters — Black", "Original Price": "$9.99", "Finalized Price": "$9.99", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C25"},
+            {"Item Type": "Retail Product", "Item Catagory": "Insoles & Foot Aids", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Tacco Suede Heel Grips", "Original Price": "$9.99", "Finalized Price": "$9.99", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C26"},
+            {"Item Type": "Retail Product", "Item Catagory": "Insoles & Foot Aids", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Tacco Suede Strappy Strips", "Original Price": "$9.00", "Finalized Price": "$11.99", "Change ($)": "$2.99", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Approved yellow-highlighted suggested price applied", "Source Tab": "Retail Product Pricing", "Source Cell": "K27"},
+            {"Item Type": "Retail Product", "Item Catagory": "Insoles & Foot Aids", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Tongue Pads", "Original Price": "$7.50", "Finalized Price": "$11.99", "Change ($)": "$4.49", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Approved yellow-highlighted suggested price applied", "Source Tab": "Retail Product Pricing", "Source Cell": "K28"},
+            {"Item Type": "Retail Product", "Item Catagory": "Insoles & Foot Aids", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "J.T. Foote Sure Soles", "Original Price": "$9.99", "Finalized Price": "$9.99", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C29"},
+            {"Item Type": "Retail Product", "Item Catagory": "Insoles & Foot Aids", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Supertap Anti-Slip Sole Adhesive", "Original Price": "$9.99", "Finalized Price": "$9.99", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C30"},
+            {"Item Type": "Retail Product", "Item Catagory": "Insoles & Foot Aids", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Tacco Leather 3/4 Insole", "Original Price": "$28.99", "Finalized Price": "$36.99", "Change ($)": "$8.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Approved yellow-highlighted suggested price applied", "Source Tab": "Retail Product Pricing", "Source Cell": "K31"},
+            {"Item Type": "Retail Product", "Item Catagory": "Insoles & Foot Aids", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Tacco Full Deluxe Leather Insole", "Original Price": "$39.99", "Finalized Price": "$39.99", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C32"},
+            {"Item Type": "Retail Product", "Item Catagory": "Insoles & Foot Aids", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Tacco Full Leather Insole", "Original Price": "$20.99", "Finalized Price": "$29.99", "Change ($)": "$9.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Approved yellow-highlighted suggested price applied", "Source Tab": "Retail Product Pricing", "Source Cell": "K33"},
+            {"Item Type": "Retail Product", "Item Catagory": "Insoles & Foot Aids", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Tacco Full Foam Insoles", "Original Price": "$10.99", "Finalized Price": "$15.99", "Change ($)": "$5.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Approved yellow-highlighted suggested price applied", "Source Tab": "Retail Product Pricing", "Source Cell": "K34"},
+            {"Item Type": "Retail Product", "Item Catagory": "Insoles & Foot Aids", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Tacco Fleece Insoles", "Original Price": "$25.99", "Finalized Price": "$25.99", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C35"},
+            {"Item Type": "Retail Product", "Item Catagory": "Insoles & Foot Aids", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Pedag Terry Cloth Insoles", "Original Price": "$24.99", "Finalized Price": "$24.99", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C36"},
+            {"Item Type": "Retail Product", "Item Catagory": "Insoles & Foot Aids", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Memory Foam Insoles", "Original Price": "$24.99", "Finalized Price": "$24.99", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C37"},
+            {"Item Type": "Retail Product", "Item Catagory": "Insoles & Foot Aids", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Pedag Arch Support Insoles", "Original Price": "$45.00", "Finalized Price": "$45.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C38"},
+            {"Item Type": "Retail Product", "Item Catagory": "Insoles & Foot Aids", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Tacco Heel Cushions — Small", "Original Price": "$9.99", "Finalized Price": "$9.99", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C39"},
+            {"Item Type": "Retail Product", "Item Catagory": "Insoles & Foot Aids", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Tacco Heel Cushions — Medium", "Original Price": "$9.99", "Finalized Price": "$9.99", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C40"},
+            {"Item Type": "Retail Product", "Item Catagory": "Insoles & Foot Aids", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Tacco Heel Cushions — Large", "Original Price": "$9.99", "Finalized Price": "$9.99", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C41"},
+            {"Item Type": "Retail Product", "Item Catagory": "Insoles & Foot Aids", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Thin Suede Halters — Nude", "Original Price": "$9.00", "Finalized Price": "$11.99", "Change ($)": "$2.99", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Approved yellow-highlighted suggested price applied", "Source Tab": "Retail Product Pricing", "Source Cell": "K42"},
+            {"Item Type": "Retail Product", "Item Catagory": "Insoles & Foot Aids", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Thin Suede Halters — Black", "Original Price": "$9.00", "Finalized Price": "$11.99", "Change ($)": "$2.99", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Approved yellow-highlighted suggested price applied", "Source Tab": "Retail Product Pricing", "Source Cell": "K43"},
+            {"Item Type": "Retail Product", "Item Catagory": "Laces", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Dress Laces", "Original Price": "$5.99", "Finalized Price": "$5.99", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C65"},
+            {"Item Type": "Retail Product", "Item Catagory": "Laces", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Athletic Laces", "Original Price": "$6.99", "Finalized Price": "$6.99", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C66"},
+            {"Item Type": "Retail Product", "Item Catagory": "Laces", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Leather Laces — per yard", "Original Price": "$4.00", "Finalized Price": "$6.99", "Change ($)": "$2.99", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Approved yellow-highlighted suggested price applied", "Source Tab": "Retail Product Pricing", "Source Cell": "K67"},
+            {"Item Type": "Retail Product", "Item Catagory": "Laces", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Moneysworth & Best Colorful Laces", "Original Price": "$5.99", "Finalized Price": "$5.99", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C68"},
+            {"Item Type": "Retail Product", "Item Catagory": "Laces", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Wide Flat Specialty Laces", "Original Price": "$13.99", "Finalized Price": "$13.99", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C69"},
+            {"Item Type": "Retail Product", "Item Catagory": "Miscellaneous", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "A.Leaf CBD 300 mg Roll-On", "Original Price": "$48.00", "Finalized Price": "$48.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C83"},
+            {"Item Type": "Retail Product", "Item Catagory": "Miscellaneous", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Angelus Leather Dye", "Original Price": "$10.99", "Finalized Price": "$10.99", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C81"},
+            {"Item Type": "Retail Product", "Item Catagory": "Miscellaneous", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Pasquale Fabrizio Shoe Care Kit", "Original Price": "$39.99", "Finalized Price": "$39.99", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C82"},
+            {"Item Type": "Retail Product", "Item Catagory": "Miscellaneous", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Ralyn Hand Sanitizer", "Original Price": "$15.00", "Finalized Price": "$15.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C80"},
+            {"Item Type": "Retail Product", "Item Catagory": "Miscellaneous", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "A.Leaf CBD 500 mg Cream", "Original Price": "$48.00", "Finalized Price": "$48.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C84"},
+            {"Item Type": "Retail Product", "Item Catagory": "Miscellaneous", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "NightCare Gel Gloves — Pink", "Original Price": "$19.99", "Finalized Price": "$19.99", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C85"},
+            {"Item Type": "Retail Product", "Item Catagory": "Miscellaneous", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "NightCare Gel Gloves — Oatmeal", "Original Price": "$19.99", "Finalized Price": "$19.99", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C86"},
+            {"Item Type": "Retail Product", "Item Catagory": "Miscellaneous", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "NightCare Gel Heel Socks — Blue", "Original Price": "$19.99", "Finalized Price": "$19.99", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C87"},
+            {"Item Type": "Retail Product", "Item Catagory": "Miscellaneous", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "NightCare Gel Heel Socks — Leopard", "Original Price": "$19.99", "Finalized Price": "$19.99", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C88"},
+            {"Item Type": "Retail Product", "Item Catagory": "Miscellaneous", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Griffin Instant Shine/Clean", "Original Price": "$12.99", "Finalized Price": "$12.99", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C89"},
+            {"Item Type": "Retail Product", "Item Catagory": "Miscellaneous", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Day One CBD Recovery Cream — 2000 mg", "Original Price": "$48.00", "Finalized Price": "$48.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C90"},
+            {"Item Type": "Retail Product", "Item Catagory": "Miscellaneous", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Gift Card", "Original Price": "", "Finalized Price": "", "Change ($)": "", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C91"},
+            {"Item Type": "Retail Product", "Item Catagory": "Miscellaneous", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Bamboo Charcoal Deodorant Insoles", "Original Price": "$9.99", "Finalized Price": "$9.99", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C92"},
+            {"Item Type": "Retail Product", "Item Catagory": "Polishes & Conditioners", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "TRG Shoe Polish", "Original Price": "$7.99", "Finalized Price": "$12.99", "Change ($)": "$5.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Approved yellow-highlighted suggested price applied", "Source Tab": "Retail Product Pricing", "Source Cell": "K53"},
+            {"Item Type": "Retail Product", "Item Catagory": "Polishes & Conditioners", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Saphir Shoe Polish", "Original Price": "$15.99", "Finalized Price": "$22.99", "Change ($)": "$7.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Approved yellow-highlighted suggested price applied", "Source Tab": "Retail Product Pricing", "Source Cell": "K54"},
+            {"Item Type": "Retail Product", "Item Catagory": "Polishes & Conditioners", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "KIWI Shoe Stretch", "Original Price": "$12.99", "Finalized Price": "$12.99", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C55"},
+            {"Item Type": "Retail Product", "Item Catagory": "Polishes & Conditioners", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Fiebing's Leather Lotion", "Original Price": "$18.99", "Finalized Price": "$18.99", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C56"},
+            {"Item Type": "Retail Product", "Item Catagory": "Polishes & Conditioners", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Four Seasons Instant Sponge — Black", "Original Price": "$6.99", "Finalized Price": "$9.99", "Change ($)": "$3.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Approved yellow-highlighted suggested price applied", "Source Tab": "Retail Product Pricing", "Source Cell": "K57"},
+            {"Item Type": "Retail Product", "Item Catagory": "Polishes & Conditioners", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Four Seasons Instant Sponge — Neutral", "Original Price": "$6.99", "Finalized Price": "$9.99", "Change ($)": "$3.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Approved yellow-highlighted suggested price applied", "Source Tab": "Retail Product Pricing", "Source Cell": "K58"},
+            {"Item Type": "Retail Product", "Item Catagory": "Polishes & Conditioners", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Angelus Dry Cleaner — 3 oz.", "Original Price": "$9.99", "Finalized Price": "$9.99", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C59"},
+            {"Item Type": "Retail Product", "Item Catagory": "Polishes & Conditioners", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Cadillac Water & Stain Protector", "Original Price": "$12.99", "Finalized Price": "$16.99", "Change ($)": "$4.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Approved yellow-highlighted suggested price applied", "Source Tab": "Retail Product Pricing", "Source Cell": "K60"},
+            {"Item Type": "Retail Product", "Item Catagory": "Polishes & Conditioners", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Collonil Organic Bamboo Lotion", "Original Price": "$18.99", "Finalized Price": "$18.99", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C61"},
+            {"Item Type": "Retail Product", "Item Catagory": "Polishes & Conditioners", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Collonil Organic Protect & Care", "Original Price": "$18.99", "Finalized Price": "$18.99", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C62"},
+            {"Item Type": "Retail Product", "Item Catagory": "Polishes & Conditioners", "Item Sub Catagory": "", "Gender": "", "Service Department": "", "Sevice Catagory": "", "Item / Service": "Moneysworth & Best Patent Care", "Original Price": "$15.00", "Finalized Price": "$15.00", "Change ($)": "$0.00", "Alternate Prices": "", "Pricing Type": "Retail", "Finalization Note": "Current price carried forward", "Source Tab": "Retail Product Pricing", "Source Cell": "C63"}
+        ];
 
-        let inventoryData = [];
-        let filteredData = [];
-        let viewMode = 'cards';
+        let filteredData = [...masterInventory];
+        let currentView = 'grid';
 
-        // Robust CSV Parser handling quotes and commas
-        function parseCSV(text) {
-            let lines = text.split('\n');
-            let result = [];
-            let headers = lines[0].split(',').map(h => h.trim());
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeDashboard();
+            populateDropdowns();
+            attachEventListeners();
+            applyFilters();
+        });
 
-            for (let i = 1; i < lines.length; i++) {
-                let line = lines[i].trim();
-                if (!line) continue;
+        function initializeDashboard() {
+            document.getElementById('statTotal').textContent = masterInventory.length;
+            const servicesCount = masterInventory.filter(i => i['Item Type'] === 'Service').length;
+            const retailCount = masterInventory.filter(i => i['Item Type'] === 'Retail Product').length;
+            document.getElementById('statServices').textContent = servicesCount;
+            document.getElementById('statRetail').textContent = retailCount;
 
-                let row = [];
-                let inQuotes = false;
-                let currentVal = '';
-
-                for (let charIndex = 0; charIndex < line.length; charIndex++) {
-                    let char = line[charIndex];
-                    if (char === '"') {
-                        inQuotes = !inQuotes;
-                    } else if (char === ',' && !inQuotes) {
-                        row.push(currentVal.trim());
-                        currentVal = '';
-                    } else {
-                        currentVal += char;
-                    }
-                }
-                row.push(currentVal.trim());
-
-                // Create object
-                let obj = {};
-                for (let h = 0; h < headers.length; h++) {
-                    obj[headers[h]] = row[h] !== undefined ? row[h] : '';
-                }
-                
-                // Only push if valid item name
-                if (obj['Item / Service']) {
-                    result.push(obj);
-                }
-            }
-            return result;
+            // Calculate average finalized price
+            let sum = 0, count = 0;
+            masterInventory.forEach(i => {
+                const p = parseFloat((i['Finalized Price'] || '').replace('$', ''));
+                if (!isNaN(p)) { sum += p; count++; }
+            });
+            const avg = count > 0 ? (sum / count).toFixed(2) : '0.00';
+            document.getElementById('statAvgPrice').textContent = `$${avg}`;
         }
 
-        // Initialize App on Load
-        window.onload = function() {
-            inventoryData = parseCSV(rawCsvData);
-            filteredData = [...inventoryData];
-            
-            populateDropdowns();
-            processUrlParams();
-            renderStats();
-            renderData();
-        };
-
-        // Populate filter dropdown options dynamically
         function populateDropdowns() {
-            let types = [...new Set(inventoryData.map(i => i['Item Type']).filter(Boolean))];
-            let genders = [...new Set(inventoryData.map(i => i['Gender']).filter(Boolean))];
-            let depts = [...new Set(inventoryData.map(i => i['Service Department']).filter(Boolean))];
-            let cats = [...new Set(inventoryData.map(i => i['Sevice Catagory'] || i['Item Catagory']).filter(Boolean))];
+            const types = [...new Set(masterInventory.map(i => i['Item Type']).filter(Boolean))];
+            const cats = [...new Set(masterInventory.map(i => i['Item Catagory']).filter(Boolean))];
+            const subCats = [...new Set(masterInventory.map(i => i['Item Sub Catagory']).filter(Boolean))];
+            
+            // Departments / Genders
+            const depts = [...new Set([
+                ...masterInventory.map(i => i['Service Department']),
+                ...masterInventory.map(i => i['Gender'])
+            ].filter(Boolean))];
 
             fillSelect('filterType', types);
-            fillSelect('filterGender', genders);
-            fillSelect('filterDept', depts);
             fillSelect('filterCat', cats);
+            fillSelect('filterSubCat', subCats);
+            fillSelect('filterDept', depts);
         }
 
-        function fillSelect(elementId, options) {
-            let sel = document.getElementById(elementId);
-            options.sort().forEach(opt => {
-                let el = document.createElement('option');
-                el.value = opt;
-                el.textContent = opt;
-                sel.appendChild(el);
+        function fillSelect(id, items) {
+            const select = document.getElementById(id);
+            items.sort().forEach(item => {
+                const opt = document.createElement('option');
+                opt.value = item;
+                opt.textContent = item;
+                select.appendChild(opt);
             });
         }
 
-        // Process URL Query Parameters on startup
-        function processUrlParams() {
-            const params = new URLSearchParams(window.location.search);
-            if (params.has('search')) document.getElementById('searchInput').value = params.get('search');
-            if (params.has('type')) document.getElementById('filterType').value = params.get('type');
-            if (params.has('gender')) document.getElementById('filterGender').value = params.get('gender');
-            if (params.has('dept')) document.getElementById('filterDept').value = params.get('dept');
-            if (params.has('category')) document.getElementById('filterCat').value = params.get('category');
-            
-            applyFilters(false);
+        function attachEventListeners() {
+            ['searchInput', 'filterType', 'filterCat', 'filterSubCat', 'filterDept'].forEach(id => {
+                document.getElementById(id).addEventListener('input', applyFilters);
+                document.getElementById(id).addEventListener('change', applyFilters);
+            });
         }
 
-        // Filter and Search logic
-        function applyFilters(updateUrl = true) {
-            let search = document.getElementById('searchInput').value.toLowerCase();
-            let type = document.getElementById('filterType').value;
-            let gender = document.getElementById('filterGender').value;
-            let dept = document.getElementById('filterDept').value;
-            let cat = document.getElementById('filterCat').value;
+        function applyFilters() {
+            const search = document.getElementById('searchInput').value.toLowerCase().trim();
+            const type = document.getElementById('filterType').value;
+            const cat = document.getElementById('filterCat').value;
+            const subCat = document.getElementById('filterSubCat').value;
+            const dept = document.getElementById('filterDept').value;
 
-            filteredData = inventoryData.filter(item => {
-                let matchesSearch = !search || 
-                    item['Item / Service'].toLowerCase().includes(search) ||
-                    item['Item Catagory'].toLowerCase().includes(search) ||
-                    item['Item Sub Catagory'].toLowerCase().includes(search) ||
-                    item['Finalization Note'].toLowerCase().includes(search);
+            filteredData = masterInventory.filter(item => {
+                // Match search keyword across all main attributes
+                const matchSearch = !search || Object.values(item).some(val => 
+                    String(val).toLowerCase().includes(search)
+                );
+                const matchType = !type || item['Item Type'] === type;
+                const matchCat = !cat || item['Item Catagory'] === cat;
+                const matchSubCat = !subCat || item['Item Sub Catagory'] === subCat;
+                const matchDept = !dept || item['Service Department'] === dept || item['Gender'] === dept;
 
-                let matchesType = !type || item['Item Type'] === type;
-                let matchesGender = !gender || item['Gender'] === gender;
-                let matchesDept = !dept || item['Service Department'] === dept;
-                let matchesCat = !cat || (item['Sevice Catagory'] === cat || item['Item Catagory'] === cat);
-
-                return matchesSearch && matchesType && matchesGender && matchesDept && matchesCat;
+                return matchSearch && matchType && matchCat && matchSubCat && matchDept;
             });
 
-            if (updateUrl) {
-                updateUrlParams({ search, type, gender, dept, category: cat });
-            }
-
-            renderStats();
+            document.getElementById('resultCount').textContent = filteredData.length;
             renderData();
-        }
-
-        function handleSearch() {
-            applyFilters();
+            updateApiSimulator(search, type, cat, subCat, dept);
         }
 
         function resetFilters() {
             document.getElementById('searchInput').value = '';
             document.getElementById('filterType').value = '';
-            document.getElementById('filterGender').value = '';
-            document.getElementById('filterDept').value = '';
             document.getElementById('filterCat').value = '';
+            document.getElementById('filterSubCat').value = '';
+            document.getElementById('filterDept').value = '';
             applyFilters();
         }
 
-        function updateUrlParams(params) {
-            const url = new URL(window.location);
-            Object.keys(params).forEach(key => {
-                if (params[key]) {
-                    url.searchParams.set(key, params[key]);
-                } else {
-                    url.searchParams.delete(key);
-                }
-            });
-            window.history.replaceState({}, '', url);
-        }
+        function setView(view) {
+            currentView = view;
+            const btnGrid = document.getElementById('btnGrid');
+            const btnTable = document.getElementById('btnTable');
+            const gridView = document.getElementById('gridView');
+            const tableView = document.getElementById('tableView');
 
-        // Render Dashboard Statistics
-        function renderStats() {
-            document.getElementById('statTotal').textContent = inventoryData.length;
-            let servicesCount = inventoryData.filter(i => i['Item Type'] === 'Service').length;
-            let retailCount = inventoryData.filter(i => i['Item Type'] === 'Retail Product').length;
-            
-            document.getElementById('statServices').textContent = servicesCount;
-            document.getElementById('statRetail').textContent = retailCount;
-
-            let prices = filteredData.map(i => parseFloat(i['Finalized Price'].replace('$', ''))).filter(p => !isNaN(p));
-            let avg = prices.length > 0 ? (prices.reduce((a, b) => a + b, 0) / prices.length).toFixed(2) : '0.00';
-            document.getElementById('statAvgPrice').textContent = `$${avg}`;
-
-            document.getElementById('itemCountDisplay').textContent = `Showing ${filteredData.length} of ${inventoryData.length} items`;
-            
-            let activeFiltersCount = ['filterType', 'filterGender', 'filterDept', 'filterCat'].filter(id => document.getElementById(id).value).length;
-            let badge = document.getElementById('activeFilterBadge');
-            if (activeFiltersCount > 0 || document.getElementById('searchInput').value) {
-                badge.classList.remove('hidden');
-                badge.textContent = `${activeFiltersCount} Filter(s) active`;
+            if (view === 'grid') {
+                btnGrid.className = 'px-4 py-1.5 rounded-lg text-sm font-semibold bg-white text-slate-800 shadow-xs transition-all';
+                btnTable.className = 'px-4 py-1.5 rounded-lg text-sm font-semibold text-slate-500 hover:text-slate-700 transition-all';
+                gridView.classList.remove('hidden');
+                tableView.classList.add('hidden');
             } else {
-                badge.classList.add('hidden');
+                btnTable.className = 'px-4 py-1.5 rounded-lg text-sm font-semibold bg-white text-slate-800 shadow-xs transition-all';
+                btnGrid.className = 'px-4 py-1.5 rounded-lg text-sm font-semibold text-slate-500 hover:text-slate-700 transition-all';
+                tableView.classList.remove('hidden');
+                gridView.classList.add('hidden');
             }
+            renderData();
         }
 
-        // Render Cards and Table Views
         function renderData() {
-            const cardContainer = document.getElementById('cardViewContainer');
+            const gridContainer = document.getElementById('gridView');
             const tableBody = document.getElementById('tableBody');
             const emptyState = document.getElementById('emptyState');
 
-            cardContainer.innerHTML = '';
+            gridContainer.innerHTML = '';
             tableBody.innerHTML = '';
 
             if (filteredData.length === 0) {
                 emptyState.classList.remove('hidden');
-                cardContainer.classList.add('hidden');
-                document.getElementById('tableViewContainer').classList.add('hidden');
+                gridContainer.classList.add('hidden');
+                document.getElementById('tableView').classList.add('hidden');
                 return;
             } else {
                 emptyState.classList.add('hidden');
-                if (viewMode === 'cards') {
-                    cardContainer.classList.remove('hidden');
-                    document.getElementById('tableViewContainer').classList.add('hidden');
-                } else {
-                    cardContainer.classList.add('hidden');
-                    document.getElementById('tableViewContainer').classList.remove('hidden');
-                }
+                if (currentView === 'grid') gridContainer.classList.remove('hidden');
+                else document.getElementById('tableView').classList.remove('hidden');
             }
 
-            filteredData.forEach((item, index) => {
-                let isService = item['Item Type'] === 'Service';
-                let typeColor = isService ? 'bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300' : 'bg-violet-50 text-violet-700 dark:bg-violet-950/60 dark:text-violet-300';
-                
-                // Build Card HTML
-                if (viewMode === 'cards') {
-                    let card = document.createElement('div');
-                    card.className = 'bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200/80 dark:border-slate-800 shadow-sm hover:shadow-md transition-all flex flex-col justify-between space-y-4';
-                    
+            filteredData.forEach(item => {
+                const isRetail = item['Item Type'] === 'Retail Product';
+                const badgeClass = isRetail ? 'bg-amber-100 text-amber-800' : 'bg-emerald-100 text-emerald-800';
+
+                // Grid Card View
+                if (currentView === 'grid') {
+                    const card = document.createElement('div');
+                    card.className = 'bg-white rounded-2xl p-5 border border-slate-200 shadow-xs hover:shadow-md transition-all flex flex-col h-full';
                     card.innerHTML = `
-                        <div class="space-y-2">
-                            <div class="flex items-center justify-between">
-                                <span class="px-2.5 py-1 rounded-full text-xs font-semibold ${typeColor}">${item['Item Type'] || 'Item'}</span>
-                                <span class="text-xs font-mono font-bold text-slate-900 dark:text-white bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-lg">${item['Finalized Price'] || item['Original Price'] || 'Call for Quote'}</span>
-                            </div>
-                            <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">${item['Item / Service']}</h3>
-                            <div class="flex flex-wrap gap-1.5 pt-1">
-                                ${item['Item Catagory'] ? `<span class="px-2 py-0.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-md text-[11px]">${item['Item Catagory']}</span>` : ''}
-                                ${item['Item Sub Catagory'] ? `<span class="px-2 py-0.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-md text-[11px]">${item['Item Sub Catagory']}</span>` : ''}
-                                ${item['Gender'] ? `<span class="px-2 py-0.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-md text-[11px]"><i class="fa-solid fa-user text-[10px] mr-1"></i>${item['Gender']}</span>` : ''}
-                                ${item['Service Department'] ? `<span class="px-2 py-0.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-md text-[11px]">${item['Service Department']}</span>` : ''}
-                            </div>
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider ${badgeClass}">
+                                ${item['Item Type']}
+                            </span>
+                            <span class="text-xs font-semibold text-slate-500">${item['Pricing Type'] || 'Fixed'}</span>
                         </div>
-                        <div class="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs text-slate-500">
-                            <span>${item['Pricing Type'] || 'Fixed Price'}</span>
-                            ${item['Change ($)'] && item['Change ($)'] !== '$0.00' ? `<span class="text-emerald-600 font-semibold">Change: ${item['Change ($%s)'.replace('%s','']}</span>` : ''}
+                        <h3 class="text-base font-bold text-slate-900 leading-snug mb-2">${item['Item / Service']}</h3>
+                        <div class="flex flex-wrap gap-1 mb-4">
+                            ${item['Item Catagory'] ? `<span class="px-2 py-0.5 bg-slate-100 text-slate-600 rounded text-xs">${item['Item Catagory']}</span>` : ''}
+                            ${item['Service Department'] ? `<span class="px-2 py-0.5 bg-slate-100 text-slate-600 rounded text-xs">${item['Service Department']}</span>` : ''}
+                            ${item['Gender'] ? `<span class="px-2 py-0.5 bg-slate-100 text-slate-600 rounded text-xs">${item['Gender']}</span>` : ''}
+                        </div>
+                        ${item['Finalization Note'] ? `<p class="text-xs text-slate-500 italic mb-4 bg-slate-50 p-2 rounded-lg border border-slate-100"><i class="fa-solid fa-circle-info mr-1 text-emerald-600"></i>${item['Finalization Note']}</p>` : ''}
+                        <div class="pt-4 border-t border-slate-100 flex items-center justify-between mt-auto">
+                            <div class="flex flex-col">
+                                <span class="text-[10px] uppercase font-bold text-slate-400">Original</span>
+                                <span class="text-sm font-medium text-slate-500 line-through">${item['Original Price'] || '—'}</span>
+                            </div>
+                            <div class="flex flex-col text-right">
+                                <span class="text-[10px] uppercase font-bold text-slate-400">Finalized</span>
+                                <span class="text-lg font-bold text-emerald-600">${item['Finalized Price'] || 'Call for Quote'}</span>
+                            </div>
                         </div>
                     `;
-                    cardContainer.appendChild(card);
+                    gridContainer.appendChild(card);
                 }
 
-                // Build Table Row HTML
-                if (viewMode === 'table') {
-                    let row = document.createElement('tr');
-                    row.className = 'hover:bg-slate-50/60 dark:hover:bg-slate-800/40 transition-colors';
+                // Table View
+                if (currentView === 'table') {
+                    const row = document.createElement('tr');
+                    row.className = 'hover:bg-slate-50/80 transition-colors';
                     row.innerHTML = `
-                        <td class="p-4 font-semibold text-slate-900 dark:text-white">${item['Item / Service']}</td>
-                        <td class="p-4"><span class="px-2 py-0.5 rounded-full text-[11px] font-semibold ${typeColor}">${item['Item Type']}</span></td>
-                        <td class="p-4 text-slate-600 dark:text-slate-300">${item['Item Catagory'] || item['Service Department'] || '-'}</td>
-                        <td class="p-4 text-slate-600 dark:text-slate-300">${item['Gender'] || '-'}</td>
-                        <td class="p-4 font-mono text-slate-500">${item['Original Price'] || '-'}</td>
-                        <td class="p-4 font-mono font-bold text-slate-900 dark:text-white">${item['Finalized Price'] || '-'}</td>
-                        <td class="p-4 text-slate-600 dark:text-slate-300">${item['Pricing Type'] || '-'}</td>
+                        <td class="px-6 py-4">
+                            <div class="font-semibold text-slate-900">${item['Item / Service']}</div>
+                            ${item['Finalization Note'] ? `<div class="text-xs text-slate-500 italic mt-0.5">${item['Finalization Note']}</div>` : ''}
+                        </td>
+                        <td class="px-6 py-4">
+                            <span class="inline-block px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${badgeClass} mb-1">${item['Item Type']}</span>
+                            <div class="text-xs text-slate-600">${item['Item Catagory'] || ''} ${item['Item Sub Catagory'] ? '• ' + item['Item Sub Catagory'] : ''}</div>
+                        </td>
+                        <td class="px-6 py-4 text-xs text-slate-600">
+                            ${item['Service Department'] || item['Gender'] ? `${item['Service Department'] || ''} ${item['Gender'] ? '(' + item['Gender'] + ')' : ''}` : '—'}
+                        </td>
+                        <td class="px-6 py-4 text-xs font-medium text-slate-700">${item['Pricing Type'] || 'Fixed'}</td>
+                        <td class="px-6 py-4 text-right text-xs text-slate-500 line-through">${item['Original Price'] || '—'}</td>
+                        <td class="px-6 py-4 text-right font-bold text-emerald-600 text-sm">${item['Finalized Price'] || 'Call for Quote'}</td>
                     `;
                     tableBody.appendChild(row);
                 }
             });
         }
 
-        // View Mode Toggler
-        function setViewMode(mode) {
-            viewMode = mode;
-            let cardBtn = document.getElementById('cardViewBtn');
-            let tableBtn = document.getElementById('tableViewBtn');
+        function updateApiSimulator(search, type, cat, subCat, dept) {
+            const params = new URLSearchParams();
+            if (type) params.append('type', type);
+            if (cat) params.append('category', cat);
+            if (subCat) params.append('subcat', subCat);
+            if (dept) params.append('department', dept);
+            if (search) params.append('q', search);
 
-            if (mode === 'cards') {
-                cardBtn.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm transition-all';
-                tableBtn.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 transition-all';
-            } else {
-                tableBtn.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm transition-all';
-                cardBtn.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 transition-all';
-            }
-            renderData();
-        }
-
-        // API Modal Manager
-        function openApiModal() {
-            document.getElementById('apiUrlOutput').value = window.location.href;
+            const queryString = params.toString() ? `?${params.toString()}` : '';
+            document.getElementById('apiEndpoint').textContent = `/api/v1/upkeep-inventory${queryString}`;
             document.getElementById('jsonItemCount').textContent = filteredData.length;
-            document.getElementById('jsonPreviewBox').textContent = JSON.stringify(filteredData, null, 2);
-            document.getElementById('apiModal').classList.remove('hidden');
+            document.getElementById('jsonOutput').textContent = JSON.stringify(filteredData, null, 2);
         }
 
-        function closeApiModal() {
-            document.getElementById('apiModal').classList.add('hidden');
-            document.getElementById('copyStatus').classList.add('hidden');
+        function copyJson() {
+            const jsonText = document.getElementById('jsonOutput').textContent;
+            navigator.clipboard.writeText(jsonText).then(() => {
+                showToast('JSON payload copied to clipboard!');
+            }).catch(err => {
+                console.error('Clipboard error:', err);
+            });
         }
 
-        function copyApiUrl() {
-            let copyText = document.getElementById('apiUrlOutput');
-            copyText.select();
-            document.execCommand('copy');
-            showCopyNotification('API URL copied successfully!');
+        function downloadJson() {
+            const jsonText = document.getElementById('jsonOutput').textContent;
+            const blob = new Blob([jsonText], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'upkeep-inventory-filtered.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast('JSON file downloaded successfully!');
         }
 
-        function copyJsonPayload() {
-            let jsonString = JSON.stringify(filteredData, null, 2);
-            let textarea = document.createElement('textarea');
-            textarea.value = jsonString;
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textarea);
-            showCopyNotification('JSON payload copied to clipboard!');
-        }
-
-        function downloadJsonPayload() {
-            let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(filteredData, null, 2));
-            let downloadAnchor = document.createElement('a');
-            downloadAnchor.setAttribute("href", dataStr);
-            downloadAnchor.setAttribute("download", "inventory_export.json");
-            document.body.appendChild(downloadAnchor);
-            downloadAnchor.click();
-            downloadAnchor.remove();
-        }
-
-        function showCopyNotification(msg) {
-            let status = document.getElementById('copyStatus');
-            status.textContent = msg;
-            status.classList.remove('hidden');
-            setTimeout(() => status.classList.add('hidden'), 3000);
-        }
-
-        // Dark Mode Toggle
-        function toggleDarkMode() {
-            const html = document.documentElement;
-            html.classList.toggle('dark');
-            let icon = document.getElementById('themeIcon');
-            if (html.classList.contains('dark')) {
-                icon.className = 'fa-solid fa-sun';
-            } else {
-                icon.className = 'fa-solid fa-moon';
-            }
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'fixed bottom-5 right-5 z-50 bg-slate-900 text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-xl flex items-center space-x-2 animate-bounce';
+            toast.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-400"></i><span>${message}</span>`;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
         }
     </script>
 </body>
