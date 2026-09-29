@@ -1,0 +1,213 @@
+THESE WILL BE SLECTED BY AI ALREADY,,,,SELECT BY THE USER,,,,,,,,,,
+Item Type,Item Catagory,Item Sub Catagory,Gender,Service Department,Sevice Catagory,Item / Service,Original Price,Finalized Price,Change ($),Alternate Prices,Pricing Type,Finalization Note,Source Tab,Source Cell
+Service,Shoes,Dress / Boot / Flat / Sneaker,Men's & Women's Services,Alterations,Glue,Glue Full Soles,,$48.00,,$48.00 / $55.00 / $65.00,Tiered / Variable,,,
+Service,Shoes,Dress / Boot / Flat / Sneaker,Men's & Women's Services,Alterations,Glue,Glue Half Soles,,$38.00,,,Fixed,,,
+Service,Shoes,Dress / Boot / Flat / Sneaker,Men's & Women's Services,Alterations,Pads,Foam Pad - Full,,$48.00,,,Fixed,,,
+Service,Shoes,Dress / Boot / Flat / Sneaker,Men's & Women's Services,Alterations,Pads,Foam Pad x1 - Half,,$38.00,,,Fixed,,,
+Service,Shoes,Dress / Boot / Flat / Sneaker,Men's & Women's Services,Alterations,Pads,Foam Pad x2 - Half,,$42.00,,,Fixed,,,
+Service,Shoes,Dress / Boot / Flat,Men's & Women's Services,Alterations,Heels,Reinforce Heel,,$75.00,,,Fixed,,,
+Service,Shoes,Dress / Boot / Flat,Women's Services,Alterations,Heels,Replace Heel,,$175.00,,,Fixed,,,
+Service,Shoes,Dress / Boot / Flat,Women's Services,Alterations,Heels,Re-Cover Both Heels,$250.00,$250.00,$0.00,,Fixed,Current price carried forward,Service Prices,D62
+Service,Shoes,Dress / Boot / Flat,Women's Services,Alterations,Heels,Re-Cover Single Heel,$150.00,$150.00,$0.00,,Fixed,Current price carried forward,Service Prices,D63
+Service,Shoes,Dress / Boot / Flat / Sneaker,Men's & Women's Services,Alterations,Restoration ,New Loops,,,,,Call for Quote,Current price carried forward,Service Prices,D84
+Service,Shoes,Dress / Boot / Flat / Sneaker,Men's & Women's Services,Alterations,Restoration ,Reinforce Loops,,,,,Call for Quote,Current price carried forward,Service Prices,D83
+Service,Shoes,Dress / Boot / Flat / Sneaker,Men's & Women's Services,Alterations,Restoration ,Re-stitch,,,,,Call for Quote,Current price carried forward,Service Prices,D85
+Service,Shoes,Dress / Boot / Flat / Sneaker,Men's & Women's Services,Alterations,Restoration ,Patch,,,,,Call for Quote,Current price carried forward,Service Prices,D86
+Service,Shoes,Dress / Boot / Flat / Sneaker,Men's & Women's Services,Alterations,Restoration ,Glue Leather,,,,,Call for Quote,Current price carried forward,Service Prices,D87
+Service,Shoes,Dress / Boot / Flat / Sneaker,Men's & Women's Services,Alterations,Restoration ,Glue & Smooth,,,,,Call for Quote,Current price carried forward,Service Prices,D87
+Service,Shoes,Dress / Boot / Flat / Sneaker,Men's & Women's Services,Alterations,Restoration ,Reinforce,,,,,Call for Quote,Current price carried forward,Service Prices,D88
+Service,Shoes,Dress / Boot / Flat / Sneaker,Men's & Women's Services,Alterations,New,New Pull,,,,,Call for Quote,Current price carried forward,Service Prices,D82
+Service,Shoes,Dress / Boot / Flat,Men's & Women's Services,Alterations,New,New Elastic (pair),,$48.00,,,,,,
+Service,Shoes,Dress / Boot / Flat,Men's & Women's Services,Alterations,New,New Zipper,$95.00,$95.00,,$95.00 / $150.00 / $250.00,Tiered / Variable,,,
+Service,Shoes,Dress / Boot / Flat,Men's & Women's Services,Alterations,Glue,Glue Sockliner,$95.00,$30.00,,,Tiered / Variable,,,
+Service,"Leather Accessories, Garments, Bags",Bag / Accesories / Garments,,Alterations,New,New Zipper,$95.00,$95.00,,$95.00 / $150.00 / $250.00,Tiered / Variable,,,
+Service,"Leather Accessories, Garments, Bags",Bag / Accesories / Garments,,Alterations,Glue,Glue Sockliner,$95.00,$30.00,,,Tiered / Variable,,,
+Service,Shoes,Dress / Boot / Flat,Men's & Women's Services,Alterations,New,New Sockliner w. Logo,,$75.00,,,Fixed,,,
+Service,Shoes,Dress / Boot / Flat,Men's & Women's Services,Alterations,New,New Sockliner (full),$95.00,$65.00,,,Fixed,,,
+Service,Shoes,Dress / Boot / Flat,Men's & Women's Services,Alterations,New,New Sockliner (half),$95.00,$48.00,,,Fixed,,,
+Service,Shoes,Dress / Boot / Flat,Men's & Women's Services,Alterations,Heels,New Heel Binding (single),$95.00,$24.00,,,Fixed,,,
+Service,Shoes,Dress / Boot / Flat,Men's & Women's Services,Alterations,Heels,New Heel Lining (both),,$75.00,,,Fixed,,,
+Service,Shoes,Dress / Boot / Flat,Men's & Women's Services,Alterations,Heels,New Heel Counter,,$75.00,,,Fixed,,,
+Service,Shoes,Dress / Boot / Flat,Men's & Women's Services,Alterations,Heels,Patch Stack,,$40.00,,,Call for Quote,,,
+Service,"Bags, Leather Accessories, Garments",Bag / Accesories / Garments,,Alterations,New,New Loops,,,,,Call for Quote,Current price carried forward,Service Prices,D84
+Service,"Bags, Leather Accessories, Garments",Bag / Accesories / Garments,,Alterations,Restoration ,Reinforce Loops,,,,,Call for Quote,Current price carried forward,Service Prices,D83
+Service,"Bags, Leather Accessories, Garments",Bag / Accesories / Garments,,Alterations,Restoration ,Re-stitch,,,,,Call for Quote,Current price carried forward,Service Prices,D85
+Service,"Bags, Leather Accessories, Garments",Bag / Accesories / Garments,,Alterations,Restoration ,Patch,,,,,Call for Quote,Current price carried forward,Service Prices,D86
+Service,"Bags, Leather Accessories, Garments",Bag / Accesories / Garments,,Alterations,Glue,Glue Leather,,,,,Call for Quote,Current price carried forward,Service Prices,D87
+Service,"Bags, Leather Accessories, Garments",Bag / Accesories / Garments,,Alterations,Glue,Glue Smooth & Touch Up,,,,,Call for Quote,Current price carried forward,Service Prices,D87
+Service,"Bags, Leather Accessories, Garments",Bag / Accesories / Garments,,Alterations,Restoration ,Reinforce,,,,,Call for Quote,Current price carried forward,Service Prices,D88
+Service,"Bags, Leather Accessories, Garments",Bag / Accesories / Garments,,Alterations,New,New Pull,,,,,Call for Quote,Current price carried forward,Service Prices,D82
+Service,"Bags, Leather Accessories, Garments",Bag / Accesories / Garments,,Alterations,New,New Zipper,$95.00,$95.00,,$95.00 / $150.00 / $250.00,Tiered / Variable,,,
+Service,Shoes,Dress / Boot / Flat,Women's Services,Alterations,New,New Strap,,,,,Call for Quote,Current price carried forward,Service Prices,D96
+Service,Shoes,Dress / Boot / Flat,Women's Services,Alterations,New,New Heel Breast,,,,,,,,
+Service,Shoes,Dress / Boot / Flat,Women's Services,Alterations,Restoration ,Take in Straps,,,,,,,,
+Service,Shoes,Boots,Women's Services,Alterations,Restoration ,Shorten,,,,,,,,
+Service,Shoes,Dress / Boot / Flat / Sneaker,Men's Services,Finishing,,Full Service Clean,$75.00,$75.00,$0.00,$75.00 / $95.00 / $125.00,Tiered / Variable,Current price carried forward,Service Prices,D28
+Service,Shoes,Dress / Boot / Flat / Sneaker,Men's Services,Finishing,,Scotchguard,$55.00,$55.00,$0.00,,Fixed,Current price carried forward,Service Prices,D29
+Service,Shoes,Dress / Boot / Flat / Sneaker,Men's Services,Finishing,,Shine,$28.00,$30.00,$4.00,$30.00 / $34.00 / $38.00,Tiered / Variable,Approved yellow-highlighted increase of $4.00 applied,Service Prices,I30
+Service,Shoes,Dress / Boot / Flat / Sneaker,Men's Services,Finishing,,Condition,$15.00,$20.00,$5.00,,Fixed,Approved yellow-highlighted increase of $5.00 applied,Service Prices,I32
+Service,Shoes,Dress / Boot / Flat / Sneaker,Men's Services,Finishing,,Brush,$15.00,$15.00,$0.00,,Fixed,Current price carried forward,Service Prices,D33
+Service,Shoes,Dress / Boot / Flat / Sneaker,Women's Services,Finishing,,Full Service Clean,$75.00,$75.00,$0.00,$75.00 / $95.00 / $125.00,Tiered / Variable,Current price carried forward,Service Prices,D64
+Service,Shoes,Dress / Boot / Flat,Women's Services,Finishing,,Shine,$28.00,$30.00,$4.00,$30.00 / $34.00 / $48.00,Fixed,Approved yellow-highlighted increase of $4.00 applied,Service Prices,I65
+Service,Shoes,Dress / Boot / Flat / Sneaker,Women's Services,Finishing,,Water & Stain,$28.00,$28.00,$0.00,,Fixed,Current price carried forward,Service Prices,D66
+Service,Shoes,Dress / Boot / Flat / Sneaker,Women's Services,Finishing,,Condition,$24.00,$28.00,$4.00,,Fixed,Approved yellow-highlighted increase of $4.00 applied,Service Prices,I67
+Service,Shoes,Dress / Boot / Flat / Sneaker,Women's Services,Finishing,,Brush Only,$18.00,$20.00,$2.00,,Fixed,Approved yellow-highlighted increase of $2.00 applied,Service Prices,I68
+Service,"Bags, Leather Accessories, Garments",Bag / Accesories / Garments,,Finishing,,"Full Clean - Inside & Out, Condition & Touch-Up",,$150.00,,,Call for Quote,Current price carried forward,Service Prices,D89
+Service,"Bags, Leather Accessories, Garments",Bag / Accesories / Garments,,Finishing,,Scotchguard,,,,,Call for Quote,Current price carried forward,Service Prices,D90
+Service,"Bags, Leather Accessories, Garments",Bag / Accesories / Garments,,Finishing,,Refinish,,,,,Call for Quote,Current price carried forward,Service Prices,D91
+Service,"Bags, Leather Accessories, Garments",Bag / Accesories / Garments,,Finishing,,Dye,,,,,Call for Quote,Current price carried forward,Service Prices,D92
+Service,"Bags, Leather Accessories, Garments",Bag / Accesories / Garments,,Finishing,,Condition,,,,,Call for Quote,Current price carried forward,Service Prices,D94
+Service,"Bags, Leather Accessories, Garments",Bag / Accesories / Garments,,Finishing,,Touch Up,,,,,Call for Quote,Current price carried forward,Service Prices,D95
+Service,"Bags, Leather Accessories, Garments",Bag / Accesories / Garments,,Finishing,,Spot Only,,,,,Call for Quote,Current price carried forward,Service Prices,D96
+Service,Shoes,Dress / Boot / Flat / Sneaker,Men's & Women's Services,Stretching,,L & W & Instep,$35.00,$40.00,$5.00,,Fixed,Approved yellow-highlighted increase of $5.00 applied,Service Prices,I70
+Service,Shoes,Dress / Boot / Flat / Sneaker,Men's & Women's Services,Stretching,,L & Instep,$30.00,$40.00,$5.00,,Fixed,Approved yellow-highlighted increase of $5.00 applied,Service Prices,I71
+Service,Shoes,Dress / Boot / Flat / Sneaker,Men's & Women's Services,Stretching,,W & Instep,$30.00,$40.00,$5.00,,Fixed,Approved yellow-highlighted increase of $5.00 applied,Service Prices,I72
+Service,Shoes,Dress / Boot / Flat / Sneaker,Men's & Women's Services,Stretching,,Length,$26.00,$30.00,$4.00,,Fixed,Approved yellow-highlighted increase of $4.00 applied,Service Prices,I73
+Service,Shoes,Dress / Boot / Flat / Sneaker,Men's & Women's Services,Stretching,,Width,$26.00,$30.00,$4.00,,Fixed,Approved yellow-highlighted increase of $4.00 applied,Service Prices,I74
+Service,Shoes,Dress / Boot / Flat / Sneaker,Men's & Women's Services,Stretching,,Instep,$26.00,$30.00,$4.00,,Fixed,Approved yellow-highlighted increase of $4.00 applied,Service Prices,I75
+Service,Shoes,Dress / Boot / Flat / Sneaker,Men's & Women's Services,Stretching,,L & W,$26.00,$30.00,$4.00,,Fixed,Approved yellow-highlighted increase of $4.00 applied,Service Prices,I76
+Service,Shoes,Dress / Boot / Flat / Sneaker,Men's & Women's Services,Stretching,,Bunions,$26.00,$30.00,$4.00,,Fixed,Approved yellow-highlighted increase of $4.00 applied,Service Prices,I77
+Service,Shoes,Dress / Boot / Flat / Sneaker,Men's & Women's Services,Stretching,,Raise Toes,$26.00,$30.00,$4.00,,Fixed,Approved yellow-highlighted increase of $4.00 applied,Service Prices,I78
+Service,Shoes,Dress / Boot / Flat / Sneaker,Men's & Women's Services,Stretching,,Toe Box,$26.00,$30.00,$4.00,,Fixed,Approved yellow-highlighted increase of $4.00 applied,Service Prices,I79
+Service,Shoes,Boots,Men's & Women's Services,Stretching,,Calves,$26.00,$75.00,$4.00,,Fixed,Approved yellow-highlighted increase of $4.00 applied,Service Prices,I79
+Service,Shoes,Boots,Men's & Women's Services,Stretching,,Calves w. Zipper,$26.00,$150.00,$4.00,,Fixed,Approved yellow-highlighted increase of $4.00 applied,Service Prices,I79
+Service,Shoes,Dress / Boot / Flat ,Men's Services,Soles & Heels ,Full Soles,Leather,$180.00,$180.00,$0.00,,Fixed,Current price carried forward,Service Prices,D4
+Service,Shoes,Dress / Boot / Flat ,Men's Services,Soles & Heels ,Full Soles,Malaysian Crepe - Soles & Heels,$250.00,$250.00,$0.00,,Fixed,Current price carried forward,Service Prices,D2
+Service,Shoes,Dress / Boot / Flat ,Men's Services,Soles & Heels ,Full Soles,Foam,$180.00,$180.00,$0.00,,Fixed,Current price carried forward,Service Prices,D5
+Service,Shoes,Dress / Boot / Flat ,Men's Services,Soles & Heels ,Full Soles,Vibram w/ Tracks,$180.00,$180.00,$0.00,,Fixed,Current price carried forward,Service Prices,D6
+Service,Shoes,Dress / Boot / Flat ,Men's Services,Soles & Heels ,Full Soles,Mirror Soles & Heels w. Gold Nails (Cover Logo),$225.00,$250.00,$0.00,,Fixed,Current price carried forward,Service Prices,D7
+Service,Shoes,Dress / Boot / Flat ,Women's Services,Soles & Heels ,Full Soles,Leather Full Sole,$180.00,$180.00,$0.00,,Fixed,Current price carried forward,Service Prices,D43
+Service,Shoes,Dress / Boot / Flat ,Men's Services,Soles & Heels ,Half Soles,Mirror Soles & Heels w. Gold Nails,$175.00,$175.00,$0.00,,Fixed,Current price carried forward,Service Prices,D7
+Service,Shoes,Dress / Boot / Flat ,Men's Services,Soles & Heels ,Half Soles,Leather (1/2 Sole),$180.00,$180.00,$0.00,,Fixed,Current price carried forward,Service Prices,D9
+Service,Shoes,Dress / Boot / Flat ,Men's Services,Soles & Heels ,Half Soles,Red Topy,$85.00,$95.00,$10.00,,Fixed,Approved yellow-highlighted increase of $10.00 applied,Service Prices,I10
+Service,Shoes,Dress / Boot / Flat ,Men's Services,Soles & Heels ,Half Soles,Topy,$75.00,$85.00,$10.00,,Fixed,Approved yellow-highlighted increase of $10.00 applied,Service Prices,I11
+Service,Shoes,Dress / Boot / Flat ,Men's Services,Soles & Heels ,Half Soles,Gum Crinkle,$125.00,$125.00,$0.00,,Fixed,Current price carried forward,Service Prices,D12
+Service,Shoes,Dress / Boot / Flat ,Men's Services,Soles & Heels ,Half Soles,Fine Line,$125.00,$125.00,$0.00,,Fixed,Current price carried forward,Service Prices,D13
+Service,Shoes,Dress / Boot / Flat ,Men's Services,Soles & Heels ,Half Soles,Mirror Red,$125.00,$125.00,$0.00,,Fixed,Current price carried forward,Service Prices,D14
+Service,Shoes,Dress / Boot / Flat ,Men's Services,Soles & Heels ,Half Soles,Matte Silk,$110.00,$110.00,$0.00,,Fixed,Current price carried forward,Service Prices,D15
+Service,Shoes,Dress / Boot / Flat ,Men's Services,Soles & Heels ,Half Soles,Crespino,$95.00,$95.00,$0.00,,Fixed,Current price carried forward,Service Prices,D16
+Service,Shoes,Dress / Boot / Flat ,Men's Services,Soles & Heels ,Half Soles,Add Stitched,$25.00,$30.00,$5.00,,Fixed,Approved yellow-highlighted increase of $5.00 applied,Service Prices,I17
+Service,Shoes,Dress / Boot / Flat ,Women's Services,Soles & Heels ,Half Soles,Leather,$125.00,$125.00,$0.00,,Fixed,Current price carried forward,Service Prices,D34
+Service,Shoes,Dress / Boot / Flat ,Women's Services,Soles & Heels ,Half Soles,Mirror Red,$110.00,$110.00,$0.00,,Fixed,Current price carried forward,Service Prices,D35
+Service,Shoes,Dress / Boot / Flat ,Women's Services,Soles & Heels ,Half Soles,Mirror,$110.00,$110.00,$0.00,,Fixed,Current price carried forward,Service Prices,D36
+Service,Shoes,Dress / Boot / Flat ,Women's Services,Soles & Heels ,Half Soles,Matte Silk,$110.00,$110.00,$0.00,,Fixed,Current price carried forward,Service Prices,D37
+Service,Shoes,Dress / Boot / Flat ,Women's Services,Soles & Heels ,Half Soles,Crespino,$85.00,$85.00,$0.00,,Fixed,Current price carried forward,Service Prices,D39
+Service,Shoes,Dress / Boot / Flat ,Women's Services,Soles & Heels ,Half Soles,Fine Line,$85.00,$85.00,$0.00,,Fixed,Current price carried forward,Service Prices,D40
+Service,Shoes,Dress / Boot / Flat ,Women's Services,Soles & Heels ,Half Soles,Red Topy,$75.00,$75.00,$0.00,,Fixed,Current price carried forward,Service Prices,D41
+Service,Shoes,Dress / Boot / Flat ,Women's Services,Soles & Heels ,Half Soles,Topy,$75.00,$75.00,$0.00,,Fixed,Current price carried forward,Service Prices,D42
+Service,Shoes,Dress / Boot / Flat ,Men's Services,Soles & Heels ,Heels & Tips,New Base Stack,$125.00,$125.00,$0.00,,Fixed,Current price carried forward,Service Prices,D8
+Service,Shoes,Dress / Boot / Flat ,Men's & Women's Services,Soles & Heels ,Heels & Tips,Tips - Rubber,$30.00,$30.00,$0.00,,Fixed,Current price carried forward,Service Prices,D19
+Service,Shoes,Dress / Boot / Flat ,Men's & Women's Services,Soles & Heels ,Heels & Tips,Tips - Leather,$30.00,$30.00,$0.00,,Fixed,Current price carried forward,Service Prices,D19
+Service,Shoes,Dress / Boot / Flat ,Men's Services,Soles & Heels ,Heels & Tips,Half & Half Mirror ,$55.00,$55.00,$0.00,,Fixed,Current price carried forward,Service Prices,D19
+Service,Shoes,Dress / Boot / Flat ,Men's Services,Soles & Heels ,Heels & Tips,Mcf Heels,$45.00,$50.00,$5.00,,Fixed,Approved yellow-highlighted increase of $5.00 applied,Service Prices,I20
+Service,Shoes,Dress / Boot / Flat ,Men's Services,Soles & Heels ,Heels & Tips,Rubber Heel,$40.00,$40.00,$0.00,$40.00 / $44.00 / $48.00,Tiered / Variable,Current price carried forward,Service Prices,D21
+Service,Shoes,Dress / Boot / Flat ,Men's Services,Soles & Heels ,Heels & Tips,Rubber on Top,$36.00,$36.00,$0.00,,Fixed,Current price carried forward,Service Prices,D22
+Service,Shoes,Dress / Boot / Flat ,Men's & Women's Services,Soles & Heels ,Heels & Tips,Heel & Toe Plates,$24.00,$24.00,$0.00,,Fixed,Current price carried forward,Service Prices,D23
+Service,Shoes,Dress / Boot / Flat ,Men's & Women's Services,Soles & Heels ,Heels & Tips,Patch Worn,$20.00,$25.00,$5.00,,Fixed,Approved yellow-highlighted increase of $5.00 applied,Service Prices,I24
+Service,Shoes,Dress / Boot / Flat ,Men's & Women's Services,Soles & Heels ,Heels & Tips,Metal Plates,$18.00,$22.00,$4.00,,Fixed,Approved yellow-highlighted increase of $4.00 applied,Service Prices,I25
+Service,Shoes,Dress / Boot / Flat ,Men's & Women's Services,Soles & Heels ,Heels & Tips,Heel Plates,$12.00,$12.00,$0.00,,Fixed,Current price carried forward,Service Prices,D26
+Service,Shoes,Dress / Boot / Flat ,Men's & Women's Services,Soles & Heels ,Heels & Tips,Toe Plates,$12.00,$12.00,$0.00,,Fixed,Current price carried forward,Service Prices,D27
+Service,Shoes,Dress / Boot / Flat ,Women's Services,Soles & Heels ,Heels & Tips,New Base Stacks,$125.00,$125.00,$0.00,,Fixed,Current price carried forward,Service Prices,D50
+Service,Shoes,Dress / Boot / Flat ,Women's Services,Soles & Heels ,Heels & Tips,Half & Half Rubber,$40.00,$55.00,$0.00,,Tiered / Variable,Current price carried forward,Service Prices,D51
+Service,Shoes,Dress / Boot / Flat ,Women's Services,Soles & Heels ,Heels & Tips,Mcf Heels,$40.00,$45.00,$0.00,,Fixed,Current price carried forward,Service Prices,D52
+Service,Shoes,Dress / Boot / Flat ,Women's Services,Soles & Heels ,Heels & Tips,Rubber on Top,$38.00,$38.00,$0.00,,Fixed,Current price carried forward,Service Prices,D53
+Service,Shoes,Dress / Boot / Flat ,Women's Services,Soles & Heels ,Heels & Tips,Rubber,$34.00,$34.00,$0.00,$30.00 / $28.00 / $26.00,Tiered / Variable,Current price carried forward,Service Prices,D54
+Service,Shoes,Dress / Boot / Flat ,Women's Services,Soles & Heels ,Heels & Tips,Rubber Taps - Red/Color,$28.00,$34.00,$2.00,,Fixed,Approved yellow-highlighted increase of $2.00 applied,Service Prices,I55
+Service,Shoes,Dress / Boot / Flat ,Women's Services,Soles & Heels ,Heels & Tips,Rubber Taps,$28.00,$30.00,$2.00,,Fixed,Approved yellow-highlighted increase of $2.00 applied,Service Prices,I55
+Service,Shoes,Dress / Boot / Flat ,Women's Services,Soles & Heels ,Heels & Tips,Cut/Shorten,$28.00,$30.00,$2.00,,Fixed,Approved yellow-highlighted increase of $2.00 applied,Service Prices,I56
+Service,Shoes,Dress / Boot / Flat ,Women's Services,Soles & Heels ,Heels & Tips,Heel & Toe Plates,$24.00,$24.00,$0.00,,Fixed,Current price carried forward,Service Prices,D57
+Service,Shoes,Dress / Boot / Flat ,Women's Services,Soles & Heels ,Heels & Tips,Patch Worn,$22.00,$22.00,$0.00,,Tiered / Variable,Current price carried forward,Service Prices,D58
+Service,Shoes,Dress / Boot / Flat ,Women's Services,Soles & Heels ,Heels & Tips,Heel Plates,$12.00,$12.00,$0.00,,Fixed,Current price carried forward,Service Prices,D60
+Service,Shoes,Dress / Boot / Flat ,Women's Services,Soles & Heels ,Heels & Tips,Toe Plates,$12.00,$12.00,$0.00,,Fixed,Current price carried forward,Service Prices,D61
+,,,,,,,,,,,,,,
+Retail Product,,,,,Brushes & Tools,Four Seasons Suede Brush,$7.99,$14.99,$7.00,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K44
+Retail Product,,,,,Brushes & Tools,Metal Wire Suede Brush,$9.99,$14.99,$5.00,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K45
+Retail Product,,,,,Brushes & Tools,Handled Suede Brush,$7.99,$14.99,$7.00,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K46
+Retail Product,,,,,Brushes & Tools,Four Seasons Medium Horsehair Brush,$24.99,$24.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C47
+Retail Product,,,,,Brushes & Tools,Four Seasons Polish Dauber,$5.99,$8.99,$3.00,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K48
+Retail Product,,,,,Brushes & Tools,Tacco Nubuck Eraser,$7.99,$14.99,$7.00,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K49
+Retail Product,,,,,Brushes & Tools,Long Shoe Horn,$9.99,$11.99,$2.00,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K50
+Retail Product,,,,,Brushes & Tools,Small Shoe Horn,$4.99,$7.99,$3.00,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K51
+Retail Product,,,,,Brushes & Tools,Metal/Wood Handle Shoe Horn,$15.99,$15.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C52
+Retail Product,,,,,Foot Petals,Tip Toes — Black,$9.99,$9.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C2
+Retail Product,,,,,Foot Petals,Tip Toes — Nude,$9.99,$9.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C3
+Retail Product,,,,,Foot Petals,Tip Toes — Grey,$9.99,$9.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C4
+Retail Product,,,,,Foot Petals,Heel Grips — Black,$9.99,$9.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C5
+Retail Product,,,,,Foot Petals,Heel Grips — Nude,$9.99,$9.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C6
+Retail Product,,,,,Foot Petals,Heel Grips — Grey,$9.99,$9.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C7
+Retail Product,,,,,Foot Petals,Killer Kushionz — Black,$15.00,$21.99,$6.99,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K8
+Retail Product,,,,,Foot Petals,Killer Kushionz — Nude,$15.00,$21.99,$6.99,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K9
+Retail Product,,,,,Foot Petals,Strappy Strips — Black,$9.99,$9.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C10
+Retail Product,,,,,Foot Petals,Strappy Strips — Nude,$9.99,$9.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C11
+Retail Product,,,,,Foot Petals,Pressure Pointz — Black,$9.99,$9.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C12
+Retail Product,,,,,Foot Petals,Pressure Pointz — Nude,$9.99,$9.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C13
+Retail Product,,,,,Foot Petals,Amazing Arches — Nude,$8.99,$14.99,$6.00,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K14
+Retail Product,,,,,Foot Petals,Amazing Arches — Black,$8.99,$14.99,$6.00,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K15
+Retail Product,,,,,Foot Petals,Shoe Deodorizers — Pink,$7.99,$11.99,$4.00,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K16
+Retail Product,,,,,Foot Petals,Shoe Deodorizers — Grey,$7.99,$11.99,$4.00,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K17
+Retail Product,,,,,Foot Petals,Ball of Foot Cushions — Nude,$9.99,$9.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C18
+Retail Product,,,,,Foot Petals,Ball of Foot Cushions — Black,$9.99,$9.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C19
+Retail Product,,,,,Foot Petals,Blister Healers,$12.99,$12.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C20
+Retail Product,,,,,Insoles & Foot Aids,Suede Thick Halters — Nude,$9.99,$9.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C23
+Retail Product,,,,,Insoles & Foot Aids,Suede Thick Halters — Brown,$9.99,$9.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C24
+Retail Product,,,,,Insoles & Foot Aids,Suede Thick Halters — Black,$9.99,$9.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C25
+Retail Product,,,,,Insoles & Foot Aids,Tacco Suede Heel Grips,$9.99,$9.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C26
+Retail Product,,,,,Insoles & Foot Aids,Tacco Suede Strappy Strips,$9.00,$11.99,$2.99,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K27
+Retail Product,,,,,Insoles & Foot Aids,Tongue Pads,$7.50,$11.99,$4.49,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K28
+Retail Product,,,,,Insoles & Foot Aids,J.T. Foote Sure Soles,$9.99,$9.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C29
+Retail Product,,,,,Insoles & Foot Aids,Supertap Anti-Slip Sole Adhesive,$9.99,$9.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C30
+Retail Product,,,,,Insoles & Foot Aids,Tacco Leather 3/4 Insole,$28.99,$36.99,$8.00,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K31
+Retail Product,,,,,Insoles & Foot Aids,Tacco Full Deluxe Leather Insole,$39.99,$39.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C32
+Retail Product,,,,,Insoles & Foot Aids,Tacco Full Leather Insole,$20.99,$29.99,$9.00,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K33
+Retail Product,,,,,Insoles & Foot Aids,Tacco Full Foam Insoles,$10.99,$15.99,$5.00,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K34
+Retail Product,,,,,Insoles & Foot Aids,Tacco Fleece Insoles,$25.99,$25.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C35
+Retail Product,,,,,Insoles & Foot Aids,Pedag Terry Cloth Insoles,$24.99,$24.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C36
+Retail Product,,,,,Insoles & Foot Aids,Memory Foam Insoles,$24.99,$24.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C37
+Retail Product,,,,,Insoles & Foot Aids,Pedag Arch Support Insoles,$45.00,$45.00,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C38
+Retail Product,,,,,Insoles & Foot Aids,Tacco Heel Cushions — Small,$9.99,$9.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C39
+Retail Product,,,,,Insoles & Foot Aids,Tacco Heel Cushions — Medium,$9.99,$9.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C40
+Retail Product,,,,,Insoles & Foot Aids,Tacco Heel Cushions — Large,$9.99,$9.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C41
+Retail Product,,,,,Insoles & Foot Aids,Thin Suede Halters — Nude,$9.00,$11.99,$2.99,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K42
+Retail Product,,,,,Insoles & Foot Aids,Thin Suede Halters — Black,$9.00,$11.99,$2.99,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K43
+Retail Product,,,,,Laces,Dress Laces,$5.99,$5.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C65
+Retail Product,,,,,Laces,Athletic Laces,$6.99,$6.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C66
+Retail Product,,,,,Laces,Leather Laces — per yard,$4.00,$6.99,$2.99,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K67
+Retail Product,,,,,Laces,Moneysworth & Best Colorful Laces,$5.99,$5.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C68
+Retail Product,,,,,Laces,Wide Flat Specialty Laces,$13.99,$13.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C69
+Retail Product,,,,,Miscellaneous,A.Leaf CBD 300 mg Roll-On,$48.00,$48.00,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C83
+Retail Product,,,,,Miscellaneous,Angelus Leather Dye,$10.99,$10.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C81
+Retail Product,,,,,Miscellaneous,Pasquale Fabrizio Shoe Care Kit,$39.99,$39.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C82
+Retail Product,,,,,Miscellaneous,Ralyn Hand Sanitizer,$15.00,$15.00,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C80
+Retail Product,,,,,Miscellaneous,A.Leaf CBD 500 mg Cream,$48.00,$48.00,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C84
+Retail Product,,,,,Miscellaneous,NightCare Gel Gloves — Pink,$19.99,$19.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C85
+Retail Product,,,,,Miscellaneous,NightCare Gel Gloves — Oatmeal,$19.99,$19.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C86
+Retail Product,,,,,Miscellaneous,NightCare Gel Heel Socks — Blue,$19.99,$19.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C87
+Retail Product,,,,,Miscellaneous,NightCare Gel Heel Socks — Leopard,$19.99,$19.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C88
+Retail Product,,,,,Miscellaneous,Griffin Instant Shine/Clean,$12.99,$12.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C89
+Retail Product,,,,,Miscellaneous,Day One CBD Recovery Cream — 2000 mg,$48.00,$48.00,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C90
+Retail Product,,,,,Miscellaneous,Gift Card,,,,,Retail,Current price carried forward,Retail Product Pricing,C91
+Retail Product,,,,,Miscellaneous,Bamboo Charcoal Deodorant Insoles,$9.99,$9.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C92
+Retail Product,,,,,Polishes & Conditioners,TRG Shoe Polish,$7.99,$12.99,$5.00,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K53
+Retail Product,,,,,Polishes & Conditioners,Saphir Shoe Polish,$15.99,$22.99,$7.00,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K54
+Retail Product,,,,,Polishes & Conditioners,KIWI Shoe Stretch,$12.99,$12.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C55
+Retail Product,,,,,Polishes & Conditioners,Fiebing's Leather Lotion,$18.99,$18.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C56
+Retail Product,,,,,Polishes & Conditioners,Four Seasons Instant Sponge — Black,$6.99,$9.99,$3.00,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K57
+Retail Product,,,,,Polishes & Conditioners,Four Seasons Instant Sponge — Neutral,$6.99,$9.99,$3.00,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K58
+Retail Product,,,,,Polishes & Conditioners,Angelus Dry Cleaner — 3 oz.,$9.99,$9.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C59
+Retail Product,,,,,Polishes & Conditioners,Cadillac Water & Stain Protector,$12.99,$16.99,$4.00,,Retail,Approved yellow-highlighted suggested price applied,Retail Product Pricing,K60
+Retail Product,,,,,Polishes & Conditioners,Collonil Organic Bamboo Lotion,$18.99,$18.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C61
+Retail Product,,,,,Polishes & Conditioners,Collonil Organic Protect & Care,$18.99,$18.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C62
+Retail Product,,,,,Polishes & Conditioners,Moneysworth & Best Patent Care,$15.99,$15.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C63
+Retail Product,,,,,Polishes & Conditioners,Saphir Crème Délicate,$24.99,$24.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C64
+Retail Product,,,,,Shoe Trees & Shapers,Women's Cedar Shoe Trees,$34.99,$34.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C70
+Retail Product,,,,,Shoe Trees & Shapers,Women's Cedar Boot Trees,$38.99,$38.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C71
+Retail Product,,,,,Shoe Trees & Shapers,Men's Cedar Shoe Trees,$34.99,$34.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C72
+Retail Product,,,,,Shoe Trees & Shapers,Men's Cedar Boot Trees,$38.99,$38.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C73
+Retail Product,,,,,Shoe Trees & Shapers,Dasco Bouquet — Colored,$22.99,$22.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C74
+Retail Product,,,,,Shoe Trees & Shapers,Pedag Boot Shapers,$38.99,$38.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C75
+Retail Product,,,,,Shoe Trees & Shapers,Moneysworth & Best Boot Shapers,$20.99,$20.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C76
+Retail Product,,,,,Shoe Trees & Shapers,Men's Plastic Shoe Trees,$8.99,$8.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C77
+Retail Product,,,,,Shoe Trees & Shapers,Women's Plastic Shoe Trees,$8.99,$8.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C78
+Retail Product,,,,,Shoe Trees & Shapers,Deluxe Cedar Shoe Trees,$48.99,$48.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C79
+Retail Product,,,,,Spongellé,French Lavender Wild Flower Bath Sponge,$12.99,$12.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C21
+Retail Product,,,,,Spongellé,Beach Grass Wild Flower Bath Sponge,$12.99,$12.99,$0.00,,Retail,Current price carried forward,Retail Product Pricing,C22
